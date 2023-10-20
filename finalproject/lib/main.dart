@@ -11,7 +11,6 @@ import 'MainPages/profile_page.dart';
 import 'MainPages/reservation_page.dart';
 import 'MainPages/setting_page.dart';
 import 'MainPages/signup.dart';
-import 'app_widget.dart';
 import 'dashboard/dash.dart';
 //hi rahma :)👵🕵️‍♀️
 void main() {

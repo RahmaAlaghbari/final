@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:project4/MainPages/Hotal_detail.dart';
+import 'package:project4/MainPages/reservation_page.dart';
 
 import '../models/hotel_model.dart';
 import '../repository/hotel_repo.dart';
@@ -60,6 +62,11 @@ class _HotelCardState extends State<HotelCard> {
                         onTap: () {
 
                           HotelRepository().getById(list[index].id.toString());
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ReservationPage()),
+                          );
 
 
                         },
