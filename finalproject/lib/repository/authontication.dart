@@ -10,35 +10,38 @@ class AuthenticationProvider {
   static String? per;
   static String? gender;
   static String? email;
-  static String? id;
+  static String? iduser;
   static String? idhotel;
 
   static void login(String Id, String name, String Email, String profile, String Password,
       int Phone,String Per,String Gender,String UName,) {
     isLoggedIn.value = true;
-    id= Id;
+    iduser = Id;
     fName = name;
     email = Email;
     img = profile;
-    password=Password;
-    uName=UName;
-    gender =Gender;
+    password = Password;
+    uName = UName;
+    gender = Gender;
     per = Per;
     phone =Phone;
 
   }
 
-  static void hotelid(String Id){
+  static void hotel(String HId){
     isLoggedIn.value = true;
 
-    idhotel=Id;
+    idhotel = HId;
+
+  } static void user(String UId){
+    isLoggedIn.value = true;
+
+    iduser = UId;
 
   }
 
-
-
   static void logout() {
     isLoggedIn.value = false;
-    id = null;
+    iduser = null;
   }
 }

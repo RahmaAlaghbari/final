@@ -72,6 +72,9 @@ class UserRepository{
 
       if (response.statusCode == 200) {
         var res = response.data;
+
+        print("###################################${res["id"]}");
+
         return UserModel.fromJson(res);
       }
 

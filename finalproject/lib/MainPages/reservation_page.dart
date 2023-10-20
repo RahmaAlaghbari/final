@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
+import '../repository/authontication.dart';
 import '../models/reservation_model.dart';
 import '../repository/reservation_repo.dart';
 
@@ -220,17 +220,20 @@ class _ReservationPageState extends State<ReservationPage> {
             iserror=false;
 
           });
+
           var date={
             "fromdate":fromdateCtr.text,
             "todate":todateCtr.text,
-            "userid":88,
-            "hotelid":77,
+            "userid": AuthenticationProvider.iduser,
+            "hotelid": AuthenticationProvider.idhotel,
             "numguests":int.parse(numguestsCtr.text),
 
           };
+          print("###################################${AuthenticationProvider.iduser}");
 
           var addRes=await ReservationRepository().addd(ReservationModel.fromJson(date));
-          print("###################################${addRes}");
+          print("###################################${ AuthenticationProvider.idhotel}");
+
           if(addRes==true){
 
             setState(() {

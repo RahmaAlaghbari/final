@@ -20,15 +20,15 @@ class ReservationModel {
   String? fromdate;
   String? todate;
 
-  int? userid;
-  int? hotelid;
+  String? userid;
+  String? hotelid;
   int? numguests;
   String? id;
 ReservationModel copyWith({  String? fromdate,
   String? todate,
 
-  int? userid,
-  int? hotelid,
+  String? userid,
+  String? hotelid,
   int? numguests,
   String? id,
 }) => ReservationModel(  fromdate: fromdate ?? this.fromdate,

@@ -44,7 +44,7 @@ class HotelRepository{
       if (response.statusCode == 200) {
         var res = response.data;
 
-        AuthenticationProvider.hotelid(res["id"]);
+        AuthenticationProvider.hotel(res["id"]);
         print("###################################${res["id"]}");
 
         return  HotelModel.fromJson(res);
