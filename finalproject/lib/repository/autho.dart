@@ -12,6 +12,7 @@ class AuthenticationProviderr {
 
   Future<bool> login(String email, String password) async {
     try {
+      await Future.delayed(Duration(milliseconds: 300));
       // Make an API request to authenticate the user
       Response response = await _dio.get('https://65253db067cfb1e59ce6f039.mockapi.io/hotelusers/users');
 

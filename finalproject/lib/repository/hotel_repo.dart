@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import '../models/hotel_model.dart';
+import 'authontication.dart';
 
 
 class HotelRepository{
@@ -42,6 +43,9 @@ class HotelRepository{
 
       if (response.statusCode == 200) {
         var res = response.data;
+
+        AuthenticationProvider.hotelid(res["id"]);
+        print("###################################${res["id"]}");
 
         return  HotelModel.fromJson(res);
       }

@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
 
           primarySwatch: Colors.blue,
         ),
-        home: ReservationPage(),
+        home: LoginPage(),
         //home: ProfilePage(),
         //home: FooterBar(),
         //home:HotelColumn(),

@@ -58,14 +58,10 @@ class _HotelCardState extends State<HotelCard> {
                       ),
                       child: InkWell(
                         onTap: () {
-                        //   // Navigate to another page
-                        //   Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) =>
-                        //           HotelDetailsPage(hotel: list[index]),
-                        //     ),
-                        //   );
+
+                          HotelRepository().getById(list[index].id.toString());
+
+
                         },
                         child: Container(
                           width: double.infinity,

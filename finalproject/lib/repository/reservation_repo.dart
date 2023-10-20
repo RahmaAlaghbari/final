@@ -55,8 +55,11 @@ class ReservationRepository{
   }
 
   Future<Object> addd(ReservationModel obj)async{
+    print("###################################${obj}");
     try{
-      await Future.delayed(Duration(milliseconds: 300));
+
+
+      await Future.delayed(Duration(milliseconds: 3000));
       var addRes = await dio.post('https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/reservation', data: obj.toJson());
       print("###########################################add res: ${addRes}");
       if (addRes.statusCode == 200) {
