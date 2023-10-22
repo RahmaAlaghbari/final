@@ -12,6 +12,8 @@ class AuthenticationProvider {
   static String? email;
   static String? iduser;
   static String? idhotel;
+  static String? namehotel;
+  static String? pricehotel;
 
   static void login(String Id, String name, String Email, String profile, String Password,
       int Phone,String Per,String Gender,String UName,) {
@@ -28,15 +30,12 @@ class AuthenticationProvider {
 
   }
 
-  static void hotel(String HId){
+  static void hotel(String HId,String name, String price){
     isLoggedIn.value = true;
 
     idhotel = HId;
-
-  } static void user(String UId){
-    isLoggedIn.value = true;
-
-    iduser = UId;
+    namehotel = name;
+    pricehotel = price;
 
   }
 
