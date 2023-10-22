@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'Hotels_page.dart';
-import 'offer_page.dart';
+import '../views/offer_page.dart';
 import '/CustomPages/appbar.dart';
-import 'profile_page.dart';
+import 'hotel/Hotels_page.dart';
+import 'profile/profile_page.dart';
 
 class FooterBar extends StatefulWidget {
   @override

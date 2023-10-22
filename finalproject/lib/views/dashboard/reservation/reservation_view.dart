@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:project4/MainPages/Hotal_detail.dart';
-import 'package:project4/MainPages/reservation_page.dart';
+import 'package:project4/views/hotel/Hotal_detail.dart';
 
-import '../models/hotel_model.dart';
-import '../models/reservation_model.dart';
-import '../repository/authontication.dart';
-import '../repository/hotel_repo.dart';
-import '../repository/reservation_repo.dart';
+import '../../../models/reservation_model.dart';
+import '../../../repository/reservation_repo.dart';
 
-class myres extends StatefulWidget {
+
+class res extends StatefulWidget {
   @override
-  State<myres> createState() => _myresState();
+  State<res> createState() => _resState();
 }
 
-class _myresState extends State<myres> {
+class _resState extends State<res> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -36,28 +33,13 @@ class HotelCard extends StatefulWidget {
   @override
   State<HotelCard> createState() => _HotelCardState();
 }
-var data ={
-  'userid': AuthenticationProvider.iduser,
-  'hotelid':AuthenticationProvider.idhotel,
-};
+
 class _HotelCardState extends State<HotelCard> {
-  Future<List<ReservationModel>> _fetchReservations() async {
-    try {
-      List<ReservationModel> reservations = await ReservationRepository().getByFields(
-        data,
-
-      );
-      return reservations;
-    } catch (e) {
-      throw e;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
       child: FutureBuilder<List<ReservationModel>>(
-        future: _fetchReservations(),
+        future: ReservationRepository().getAll(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -78,7 +60,6 @@ class _HotelCardState extends State<HotelCard> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          print("#################################${AuthenticationProvider.idhotel}");
                         },
                         child: Container(
                           width: double.infinity,
@@ -91,14 +72,14 @@ class _HotelCardState extends State<HotelCard> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "${AuthenticationProvider.namehotel}",
+                                    "name hotel",
                                     style: TextStyle(
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Text(
-                                    '${AuthenticationProvider.pricehotel}',
+                                    'price',
                                     style: TextStyle(
                                       fontSize: 18.0,
                                       fontWeight: FontWeight.bold,

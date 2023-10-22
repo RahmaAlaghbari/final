@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'login_page.dart';
 import 'package:project4/CustomPages/appbar.dart';
-import 'package:project4/MainPages/personal_info%20page.dart';
+import 'package:project4/views/profile/personal_info%20page.dart';
+
+import '../reservation/my_reservation.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -74,6 +75,7 @@ class ProfilePage extends StatelessWidget {
                 ),
                 Column(
                   children: [
+
                     Text(
                       'Reservation',
                       style: TextStyle(
@@ -116,14 +118,16 @@ class ProfilePage extends StatelessWidget {
                 Icons.credit_card,
               ),
               title: Text(
-                'Payment Methods',
+                'My Reservation',
                 style: TextStyle(
                   fontSize: 16.0,
                 ),
               ),
               onTap: () {
-                // Empty function, no page navigation
-              },
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => myres()),
+                );              },
             ),
 
 

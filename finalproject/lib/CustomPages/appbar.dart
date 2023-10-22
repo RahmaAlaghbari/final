@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../MainPages/setting_page.dart';
+import '../views/setting_page.dart';
 
 
 class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {

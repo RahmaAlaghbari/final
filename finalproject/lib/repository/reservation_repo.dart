@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 
 import '../models/hotel_model.dart';
 import '../models/reservation_model.dart';
-import '../views/my_reservation.dart';
+import '../views/reservation/my_reservation.dart';
 
 
 class ReservationRepository{

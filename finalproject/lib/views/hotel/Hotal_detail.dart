@@ -1,8 +1,8 @@
 
 
 import 'package:flutter/material.dart';
-import 'reservation_page.dart';
 
+import '../reservation/add_reservation.dart';
 import 'Hotels_page.dart';
 
 class HotelDetailsPage extends StatelessWidget {

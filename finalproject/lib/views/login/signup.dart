@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../models/user_model.dart';
-import '../repository/user_repo.dart';
+import '../../models/user_model.dart';
+import '../../repository/user_repo.dart';
 
 class SignUpPage extends StatefulWidget {
   @override

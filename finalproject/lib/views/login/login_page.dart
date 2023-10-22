@@ -1,9 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../repository/autho.dart';
+import 'package:project4/views/login/signup.dart';
 import 'package:provider/provider.dart';
-import 'Home.dart';
-import 'signup.dart';
+
+import '../../repository/authontication.dart';
+import '../../repository/login_repo.dart';
+import '../Home.dart';
+import '../dashboard/dashboard.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -154,11 +157,24 @@ class _LoginPageState extends State<LoginPage> {
                                           print("########################$loginSuccess");
 
                                           if (loginSuccess) {
-                                            // Login successful
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => FooterBar()),
-                                            );
+                                            if(AuthenticationProvider.per=="user") {
+                                              // Login successful
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        FooterBar()),
+                                              );
+                                            }
+
+                                            else if(AuthenticationProvider.per=="admin"){
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DashboardPage()),
+                                              );
+                                            }
                                           } else {
                                             // Login failed
                                             ScaffoldMessenger.of(context).showSnackBar(
@@ -181,7 +197,10 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 TextButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(context, 'register');
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => SignUpPage()),
+                                    );
                                   },
                                   child: Text(
                                     'Sign Up',
@@ -194,10 +213,7 @@ class _LoginPageState extends State<LoginPage> {
                                   style: ButtonStyle(),
                                 ),
                                 TextButton(
-                                    onPressed: () {   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => SignUpPage()),
-                                    );
+                                    onPressed: () {
                                     },
                                     child: Text(
                                       'Forgot Password',

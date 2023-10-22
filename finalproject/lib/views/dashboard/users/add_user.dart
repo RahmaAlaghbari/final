@@ -6,12 +6,12 @@ import 'dart:io';
 import 'dart:typed_data';
 
 // import 'package:image_picker/image_picker.dart';
-import 'package:project4/repository/hotel_repo.dart';
+import 'package:project4/repository/user_repo.dart';
 
-import '../CustomPages/appbar.dart';
-import '../models/hotel_model.dart';
+import '../../../CustomPages/appbar.dart';
+import '../../../models/user_model.dart';
 
-//
+
 // selectImageFromGallery() async {
 //   XFile? file = await ImagePicker()
 //       .pickImage(source: ImageSource.gallery, imageQuality: 10);
@@ -23,16 +23,20 @@ import '../models/hotel_model.dart';
 // }
 
 
-class hotelAdd extends StatefulWidget {
-  const hotelAdd({Key? key}) : super(key: key);
+class userAdd extends StatefulWidget {
+  const userAdd({Key? key}) : super(key: key);
 
   @override
-  State<hotelAdd> createState() => _hotelAdd();
+  State<userAdd> createState() => _userAdd();
 }
 
-class _hotelAdd extends State<hotelAdd> {
+class _userAdd extends State<userAdd> {
   @override
+  String? selectedPermission;
+  String? selectedGender;
 
+  final permissionList = ['admin', 'user'];
+  final genderList = ['male', 'female', 'others'];
 
   String selectedImagePath = 'jhgggj';
 
@@ -42,13 +46,12 @@ class _hotelAdd extends State<hotelAdd> {
   String error="";
   var nameCtr=TextEditingController();
 
-  var descnmaeCtr=TextEditingController();
-  var descriptionCtr=TextEditingController();
-  var priceCtr=TextEditingController();
-  var locationCtr=TextEditingController();
-  var roomsCtr=TextEditingController();
- // var avatarCtr=TextEditingController();
-
+  var phoneCtr=TextEditingController();
+  var emailCtr=TextEditingController();
+  var passwordCtr=TextEditingController();
+  var genderCtr=TextEditingController();
+  var perCtr=TextEditingController();
+  var usernameCtr=TextEditingController();
 
 
 
@@ -145,12 +148,12 @@ class _hotelAdd extends State<hotelAdd> {
               padding: const EdgeInsets.all(20.0),
               child: TextFormField(
 
-                controller: descnmaeCtr,
+                controller: usernameCtr,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  hintText: "Desdescription Name",
-                  labelText: "Desdescription Name",
+                  hintText: "User Name",
+                  labelText: "User Name",
                   labelStyle: TextStyle(fontWeight: FontWeight.bold),
                   counterText: "20",
                   border:
@@ -169,7 +172,7 @@ class _hotelAdd extends State<hotelAdd> {
                     return "value is null";}
                   if(val != null){
                     if(val.length <3){
-                      return "Desdescription Name must be more than 3 chars";
+                      return "User Name must be more than 3 chars";
                     }
 
                   }
@@ -182,12 +185,12 @@ class _hotelAdd extends State<hotelAdd> {
               padding: const EdgeInsets.all(20.0),
               child: TextFormField(
 
-                controller: descriptionCtr,
+                controller: emailCtr,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  hintText: "description",
-                  labelText: "desdescription",
+                  hintText: "email",
+                  labelText: "email",
                   labelStyle: TextStyle(fontWeight: FontWeight.bold),
                   counterText: "20",
                   border:
@@ -215,92 +218,17 @@ class _hotelAdd extends State<hotelAdd> {
 
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: TextFormField(
 
-                controller: priceCtr,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  hintText: "price",
-                  labelText: "price",
-                  labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                  counterText: "20",
-                  border:
-                  OutlineInputBorder(borderSide:BorderSide(color: Colors.amber),
-                      borderRadius: BorderRadius.circular(20)),
-                  errorBorder:  OutlineInputBorder(borderSide:BorderSide(color: Colors.red),
-                      borderRadius: BorderRadius.circular(20)),
-
-
-
-                ),
-
-
-                validator: (val){
-                  if(val == ""){
-                    return "value is null";}
-                  if(val != null){
-                    if(val.length <3){
-                      return "password must be more than 3 chars";
-                    }
-
-                  }
-                }
-                ,
-
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: TextFormField(
-
-                controller: locationCtr,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  hintText: "location",
-                  labelText: "location",
-                  labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                  counterText: "20",
-                  border:
-                  OutlineInputBorder(borderSide:BorderSide(color: Colors.amber),
-                      borderRadius: BorderRadius.circular(20)),
-                  errorBorder:  OutlineInputBorder(borderSide:BorderSide(color: Colors.red),
-                      borderRadius: BorderRadius.circular(20)),
-
-
-
-                ),
-
-
-                validator: (val){
-                  if(val == ""){
-                    return "value is null";}
-                  if(val != null){
-                    if(val.length <3){
-                      return "password must be more than 3 chars";
-                    }
-
-                  }
-                }
-                ,
-
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: TextFormField(
-
-                controller: roomsCtr,
+                controller: phoneCtr,
                 keyboardType: TextInputType.number,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                  hintText: "rooms",
-                  labelText: "rooms",
+                  hintText: "phone",
+                  labelText: "phone",
                   labelStyle: TextStyle(fontWeight: FontWeight.bold),
                   counterText: "20",
                   border:
@@ -319,7 +247,7 @@ class _hotelAdd extends State<hotelAdd> {
                     return "value is null";}
                   if(val != null){
                     if(val.length <3){
-                      return "rooms must be more than 3 chars";
+                      return "phone must be more than 3 chars";
                     }
 
                   }
@@ -328,12 +256,107 @@ class _hotelAdd extends State<hotelAdd> {
 
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: TextFormField(
+
+                controller: passwordCtr,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  hintText: "password",
+                  labelText: "password",
+                  labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                  counterText: "20",
+                  border:
+                  OutlineInputBorder(borderSide:BorderSide(color: Colors.amber),
+                      borderRadius: BorderRadius.circular(20)),
+                  errorBorder:  OutlineInputBorder(borderSide:BorderSide(color: Colors.red),
+                      borderRadius: BorderRadius.circular(20)),
 
 
 
+                ),
 
 
-            if (loading) CircularProgressIndicator() else TextButton(onPressed: ()async{
+                validator: (val){
+                  if(val == ""){
+                    return "value is null";}
+                  if(val != null){
+                    if(val.length <3){
+                      return "password must be more than 3 chars";
+                    }
+
+                  }
+                }
+                ,
+
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: DropdownButtonFormField<String>(
+                value: selectedGender,
+                onChanged: (newValue) {
+                  setState(() {
+                    selectedGender = newValue;
+                    genderCtr.text = newValue ?? '';
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: 'Gender',
+                  labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.amber),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                items: genderList.map((gender) {
+                  return DropdownMenuItem<String>(
+                    value: gender,
+                    child: Text(gender),
+                  );
+                }).toList(),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: DropdownButtonFormField<String>(
+                value: selectedPermission,
+                onChanged: (newValue) {
+                  setState(() {
+                    selectedPermission = newValue;
+                    perCtr.text = newValue ?? '';
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: 'Permission',
+                  labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.amber),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                items: permissionList.map((permission) {
+                  return DropdownMenuItem<String>(
+                    value: permission,
+                    child: Text(permission),
+                  );
+                }).toList(),
+              ),
+            ),
+
+
+
+           if (loading) CircularProgressIndicator() else TextButton(onPressed: ()async{
               if(formKey.currentState!.validate()){
                 try{
                   setState(() {
@@ -342,20 +365,19 @@ class _hotelAdd extends State<hotelAdd> {
                     iserror=false;
 
                   });
-                var data={
-                "name":nameCtr.text,
-                  "avatar":"https://th.bing.com/th/id/R.ce43f7e8e0571c21e762b8924aad874d?rik=0ATDeAN%2bQ7cyxQ&riu=http%3a%2f%2ftravelji.com%2fwp-content%2fuploads%2fHotel-Tips.jpg&ehk=LzuGeOKqbj3J7q%2f%2fldexRjd2c0yRmq%2b%2fypHlVvmA3dM%3d&risl=&pid=ImgRaw&r=0",
-
-                "descnmae":descnmaeCtr.text,
-                "description":descriptionCtr.text,
-                "price":priceCtr.text,
-                "location":locationCtr.text,
-                "rooms":int.parse(roomsCtr.text),
-
+                var date={
+                "fName":nameCtr.text,
+                  "img":"https://th.bing.com/th/id/R.e2981720d54bd5c7869ed4918473dbf5?rik=3km1AVdxxXLKSA&riu=http%3a%2f%2fvbconversions.com%2fwp-content%2fuploads%2f2018%2f04%2fperson-icon-6.png&ehk=N8n%2bOsRYgQcalmQs9Vv9wEsqtw93GDpSp23eQJOwfTM%3d&risl=&pid=ImgRaw&r=0",
+                "uName":nameCtr.text,
+                "password":passwordCtr.text,
+                "phone":int.parse(phoneCtr.text),
+                "per":perCtr.text,
+                "gender":genderCtr.text,
+                "email":emailCtr.text,
 
 
                 };
-                var addRes=await HotelRepository().addd(HotelModel.fromJson(data));
+                var addRes=await UserRepository().addd(UserModel.fromJson(date));
                 if(addRes!=true){
                 setState(() {
                 loading=false;
@@ -389,9 +411,6 @@ class _hotelAdd extends State<hotelAdd> {
                 }
 
               }
-
-
-
 
 
                 , child: Text("send")),
