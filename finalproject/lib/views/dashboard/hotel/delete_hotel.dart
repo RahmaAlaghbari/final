@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import '../repository/user_repo.dart';
+import '../../../repository/hotel_repo.dart';
 
 
 
-class UserDelete extends StatefulWidget {
-  const UserDelete({super.key, required this.itemId});
+
+
+class HotelDelete extends StatefulWidget {
+  const HotelDelete({super.key, required this.itemId});
   final String itemId;
 
   @override
-  State<UserDelete> createState() => _UserDelete();
+  State<HotelDelete> createState() => _HotelDelete();
 }
 
-class _UserDelete extends State<UserDelete> {
+class _HotelDelete extends State<HotelDelete> {
   String txtConfirm = "Do you want to delete this item?";
   bool loading = false;
   bool isError = false;
@@ -57,7 +59,7 @@ class _UserDelete extends State<UserDelete> {
                         successMsg = "";
                       });
                       var delRes =
-                      await UserRepository().deletee(widget.itemId);
+                      await HotelRepository().deletee(widget.itemId);
                       if (delRes !=true) {
                         setState(() {
                           loading = false;

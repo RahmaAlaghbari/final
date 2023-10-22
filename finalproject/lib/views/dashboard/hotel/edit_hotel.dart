@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/hotel_model.dart';
-import '../repository/hotel_repo.dart';
+import '../../../models/hotel_model.dart';
+import '../../../repository/hotel_repo.dart';
 
 class HotelUpdate extends StatefulWidget {
   final String hotelId;

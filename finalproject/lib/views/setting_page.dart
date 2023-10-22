@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:project4/views/my_reservation.dart';
 import '../repository/authontication.dart';
-import 'contact_us.dart';
 
-import 'login_page.dart';
+import 'contact_us.dart';
+import 'login/login_page.dart';
+import 'reservation/my_reservation.dart';
 
 class SettingsPage extends StatefulWidget {
   @override

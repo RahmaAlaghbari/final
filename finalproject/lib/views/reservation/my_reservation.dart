@@ -1,19 +1,19 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:project4/MainPages/Hotal_detail.dart';
-import 'package:project4/MainPages/reservation_page.dart';
+import 'package:project4/views/hotel/Hotal_detail.dart';
 
-import '../models/hotel_model.dart';
-import '../repository/hotel_repo.dart';
+import '../../models/hotel_model.dart';
+import '../../models/reservation_model.dart';
+import '../../repository/authontication.dart';
+import '../../repository/hotel_repo.dart';
+import '../../repository/reservation_repo.dart';
 
-class HotelColumn extends StatefulWidget {
+class myres extends StatefulWidget {
   @override
-  State<HotelColumn> createState() => _HotelColumnState();
+  State<myres> createState() => _myresState();
 }
 
-class _HotelColumnState extends State<HotelColumn> {
+class _myresState extends State<myres> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -22,7 +22,9 @@ class _HotelColumnState extends State<HotelColumn> {
       },
       child: SingleChildScrollView(
         child: Column(
-          children: [HotelCard()],
+          children: [
+            HotelCard(),
+          ],
         ),
       ),
     );
@@ -33,20 +35,35 @@ class HotelCard extends StatefulWidget {
   @override
   State<HotelCard> createState() => _HotelCardState();
 }
-
+var data ={
+  'userid': AuthenticationProvider.iduser,
+  'hotelid':AuthenticationProvider.idhotel,
+};
 class _HotelCardState extends State<HotelCard> {
+  Future<List<ReservationModel>> _fetchReservations() async {
+    try {
+      List<ReservationModel> reservations = await ReservationRepository().getByFields(
+        data,
+
+      );
+      return reservations;
+    } catch (e) {
+      throw e;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder<List<HotelModel>>(
-        future: HotelRepository().getAll(),
+      child: FutureBuilder<List<ReservationModel>>(
+        future: _fetchReservations(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError)
+            if (snapshot.hasError) {
               return Center(child: Text("Error ${snapshot.error.toString()}"));
-            else if (snapshot.hasData) {
+            } else if (snapshot.hasData) {
               var list = snapshot.data ?? [];
               return ListView.separated(
                 shrinkWrap: true,
@@ -60,15 +77,7 @@ class _HotelCardState extends State<HotelCard> {
                       ),
                       child: InkWell(
                         onTap: () {
-
-                          HotelRepository().getById(list[index].id.toString());
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ReservationPage()),
-                          );
-
-
+                          print("#################################${AuthenticationProvider.idhotel}");
                         },
                         child: Container(
                           width: double.infinity,
@@ -76,35 +85,19 @@ class _HotelCardState extends State<HotelCard> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(12.0),
-                                child: list[index].avatar == ''
-                                    ? Container(
-                                  child: Icon(Icons.image),
-                                  width: 50,
-                                  height: 50,
-                                )
-                                    : Image.network(
-                                  list[index].avatar!,
-                                  width: double.infinity,
-                                  height: 150.0,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
                               SizedBox(height: 8.0),
                               Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    "${list[index].name}",
+                                    "${AuthenticationProvider.namehotel}",
                                     style: TextStyle(
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Text(
-                                    '${list[index].price}',
+                                    '${AuthenticationProvider.pricehotel}',
                                     style: TextStyle(
                                       fontSize: 18.0,
                                       fontWeight: FontWeight.bold,
@@ -115,7 +108,7 @@ class _HotelCardState extends State<HotelCard> {
                               ),
                               SizedBox(height: 8.0),
                               Text(
-                                '${list[index].description}',
+                                '${list[index].fromdate} -> ${list[index].todate}',
                                 style: TextStyle(
                                   fontSize: 16.0,
                                   color: Colors.grey[600],
@@ -123,7 +116,7 @@ class _HotelCardState extends State<HotelCard> {
                               ),
                               SizedBox(height: 8.0),
                               RatingBar.builder(
-                               // initialRating: list[index].rating,
+                                // initialRating: list[index].rating,
                                 minRating: 1,
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,

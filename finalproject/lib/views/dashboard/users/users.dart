@@ -2,23 +2,21 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import '../CustomPages/appbar.dart';
-import '../models/hotel_model.dart';
-import '../repository/hotel_repo.dart';
-import 'add_hotel.dart';
-import 'delete_hotel.dart';
-import 'edit_hotel.dart';
+import '../../../CustomPages/appbar.dart';
+import '../../../models/user_model.dart';
+import '../../../repository/user_repo.dart';
+import 'add_user.dart';
+import 'delete_user.dart';
+import 'edit_user.dart';
 
-
-
-class HotelView extends StatefulWidget {
-  const HotelView({Key? key}) : super(key: key);
+class UserView extends StatefulWidget {
+  const UserView({Key? key}) : super(key: key);
 
   @override
-  State<HotelView> createState() => _HotelView();
+  State<UserView> createState() => _UserView();
 }
 
-class _HotelView extends State<HotelView> {
+class _UserView extends State<UserView> {
   @override
   Widget build(BuildContext context) {
     return
@@ -34,7 +32,7 @@ class _HotelView extends State<HotelView> {
               onPressed: ()async{
                 var isAdd=await  Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => hotelAdd()),
+                  MaterialPageRoute(builder: (context) => userAdd()),
                 );
                 if(isAdd!=null && isAdd==true){
                   setState(() {
@@ -43,8 +41,8 @@ class _HotelView extends State<HotelView> {
                 }
               }),
 
-          body: Container(child: FutureBuilder<List<HotelModel>>(
-            future: HotelRepository().getAll(),
+          body: Container(child: FutureBuilder<List<UserModel>>(
+            future: UserRepository().getAll(),
 
             builder: (context,snapshot){
               if(snapshot.connectionState ==ConnectionState.waiting){
@@ -58,23 +56,23 @@ class _HotelView extends State<HotelView> {
                   var list=snapshot.data??[];
                   return ListView.separated(
                       itemBuilder: (context,index){
-                        return ListTile(leading: list[index].avatar == ''
+                        return ListTile(leading: list[index].img == ''
                             ? Container(child: Icon(Icons.image),width: 50,height: 50,)
 
                             :ClipOval(
                           child: Image.network(
-                            list[index].avatar!,
+                            list[index].img!,
                             height: 50,
                             width: 56,
                             fit: BoxFit.fill,
                           ),
                         ),
-                            title: Text("${list[index].name}"),
+                            title: Text("${list[index].fName}"),
                             subtitle:Row(children: [
 
-                              Text("${list[index].descnmae}" ,),
+                              Text("${list[index].email}" ,),
                               SizedBox(width: 50,),
-                              Text("${list[index].description}" ,style: TextStyle(color: Colors.red),),
+                              Text("${list[index].gender}" ,style: TextStyle(color: Colors.red),),
                             ],),
 
 
@@ -90,8 +88,8 @@ class _HotelView extends State<HotelView> {
                                     var isUpdated =
                                     await Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (context) => HotelUpdate(
-                                            hotelId: list[index].id.toString(),
+                                        builder: (context) => UserUpdate(
+                                            userId: list[index].id.toString(),
                                         ),
                                       ),
                                     );
@@ -111,7 +109,7 @@ class _HotelView extends State<HotelView> {
                                     var delRes = await showDialog(
                                       context: context,
                                       builder: (context) {
-                                        return HotelDelete(itemId: list[index].id.toString());
+                                        return UserDelete(itemId: list[index].id.toString());
                                       },
                                     );
                                     if (delRes != null && delRes == true) {

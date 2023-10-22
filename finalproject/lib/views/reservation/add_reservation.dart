@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import '../repository/authontication.dart';
-import '../models/reservation_model.dart';
-import '../repository/reservation_repo.dart';
-import '../views/my_reservation.dart';
-import 'login_page.dart';
+import '../../repository/authontication.dart';
+import '../../models/reservation_model.dart';
+import '../../repository/reservation_repo.dart';
+import '../login/login_page.dart';
+import 'my_reservation.dart';
 
 class ReservationPage extends StatefulWidget {
   @override

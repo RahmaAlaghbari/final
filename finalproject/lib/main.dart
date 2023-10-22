@@ -1,18 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:project4/repository/autho.dart';
-import 'package:project4/views/hotels.dart';
-import 'package:project4/views/users.dart';
 import 'package:provider/provider.dart';
-import 'MainPages/Hotels_page.dart';
-import 'MainPages/Home.dart';
-import 'MainPages/login_page.dart';
-import 'MainPages/profile_page.dart';
-import 'MainPages/reservation_page.dart';
-import 'MainPages/setting_page.dart';
-import 'MainPages/signup.dart';
-import 'dashboard/dash.dart';
-import 'MainPages/login.dart';
+import 'repository/login_repo.dart';
+import 'views/login/login_page.dart';
+import 'views/setting_page.dart';
+
 //hi rahma :)👵🕵️‍♀️
 void main() {
   runApp(const MyApp());
@@ -27,7 +19,7 @@ class MyApp extends StatelessWidget {
     return Provider(
       create: (_) => AuthenticationProviderr(Dio()), // Create an instance of the AuthenticationProvider
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Booking Hotels',
         theme: ThemeData(
 
           primarySwatch: Colors.blue,
