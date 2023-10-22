@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project4/views/my_reservation.dart';
+import '../repository/authontication.dart';
 import 'contact_us.dart';
 
 import 'login_page.dart';
@@ -66,7 +68,10 @@ class _SettingsPageState extends State<SettingsPage> {
               title: Text('Language'),
               onTap: () {
                 _selectItem(3);
-                // TODO: Add language selection functionality
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => myres()),
+                );
               },
             ),
             Divider(),
@@ -106,6 +111,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               onTap: () {
+                AuthenticationProvider.logout();
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),

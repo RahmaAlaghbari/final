@@ -69,7 +69,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 controller: _nameController,
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
 
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.black54),
 
                                 decoration: InputDecoration(
                                   border:
@@ -114,7 +114,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),//name
                               TextFormField(
                                 controller: _imageController,
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.black54),
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -152,7 +152,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),//img
                               TextFormField(
                                 controller: _emailController,
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.black54),
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -190,7 +190,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),//email
                               TextFormField(
                                 controller: _usernameController,
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.black54),
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
@@ -230,7 +230,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               TextFormField(
                                 controller: _passwordController,
 
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.black54),
                                 obscureText: true,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
@@ -311,7 +311,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   Text(
                                     'Sign Up',
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black54,
                                         fontSize: 27,
                                         fontWeight: FontWeight.w700),
                                   ),

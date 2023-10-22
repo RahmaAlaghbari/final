@@ -86,13 +86,12 @@ class ReservationRepository{
     }
   }
 
-
-
-  Future<List<ReservationModel>> getByField(String fieldName, dynamic fieldValue) async {
+  Future<List<ReservationModel>> getByFields(Map<String, dynamic> fields) async {
     try {
-
-      var response = await dio.get('https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/reservation',
-          queryParameters: {fieldName: fieldValue});
+      var response = await dio.get(
+        'https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/reservation',
+        queryParameters: fields,
+      );
 
       List<ReservationModel> list = [];
 

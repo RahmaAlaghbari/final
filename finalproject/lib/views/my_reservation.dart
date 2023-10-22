@@ -36,13 +36,16 @@ class HotelCard extends StatefulWidget {
   @override
   State<HotelCard> createState() => _HotelCardState();
 }
-
+var data ={
+  'userid': AuthenticationProvider.iduser,
+  'hotelid':AuthenticationProvider.idhotel,
+};
 class _HotelCardState extends State<HotelCard> {
   Future<List<ReservationModel>> _fetchReservations() async {
     try {
-      List<ReservationModel> reservations = await ReservationRepository().getByField(
-        'hotelid',
-        AuthenticationProvider.idhotel.toString(),
+      List<ReservationModel> reservations = await ReservationRepository().getByFields(
+        data,
+
       );
       return reservations;
     } catch (e) {
