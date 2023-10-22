@@ -71,9 +71,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
- # assets:
-#    - assets/aa.png
-#    - assets/hotel_1.png
+  assets:
+    - assets/login.png
+    - assets/register.png
 #    - assets/hotel_2.png
 #    - assets/hotel_3.png
 #    - assets/hotel_4.png

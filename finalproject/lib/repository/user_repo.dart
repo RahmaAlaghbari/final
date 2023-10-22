@@ -14,6 +14,8 @@ class UserRepository{
   Future<List<UserModel>> getAll()async{
 
     try{
+      await Future.delayed(Duration(milliseconds: 300));
+
       // await Future.delayed(Duration(milliseconds: 300));
       var res = await dio.get('https://65253db067cfb1e59ce6f039.mockapi.io/hotelusers/users');
       List<UserModel> items = [];
@@ -52,6 +54,8 @@ class UserRepository{
 
   Future<UserModel> login(UserModel user) async {
     try {
+      await Future.delayed(Duration(milliseconds: 300));
+
       var response = await dio.post('https://65253db067cfb1e59ce6f039.mockapi.io/hotelusers/users', data: user.toJson());
       if (response.statusCode == 200) {
         var data = response.data;
@@ -67,6 +71,8 @@ class UserRepository{
   }
   Future<UserModel?> getById(String id) async {
     try {
+      await Future.delayed(Duration(milliseconds: 300));
+
       var apiUrl = 'https://65253db067cfb1e59ce6f039.mockapi.io/hotelusers/users/$id';
       var response = await dio.get(apiUrl); // Make the API request using Dio
 
