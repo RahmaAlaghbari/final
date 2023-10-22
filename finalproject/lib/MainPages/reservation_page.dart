@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import '../repository/authontication.dart';
 import '../models/reservation_model.dart';
 import '../repository/reservation_repo.dart';
+import '../views/my_reservation.dart';
+import 'login_page.dart';
 
 class ReservationPage extends StatefulWidget {
   @override
@@ -232,6 +234,7 @@ class _ReservationPageState extends State<ReservationPage> {
           print("###################################${AuthenticationProvider.iduser}");
 
           var addRes=await ReservationRepository().addd(ReservationModel.fromJson(date));
+
           print("###################################${ AuthenticationProvider.idhotel}");
 
           if(addRes==true){
@@ -242,8 +245,12 @@ class _ReservationPageState extends State<ReservationPage> {
               iserror=false;
               error="";
 
+
             });
-            Navigator.of(context).pop(true);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => myres()),
+            );
           }
           else{
             setState(() {
@@ -251,7 +258,10 @@ class _ReservationPageState extends State<ReservationPage> {
               issuccess=false;
               iserror=true;
               error="Operation failed!!";
-
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => myres()),
+              );
             });
           }
         }
@@ -280,6 +290,7 @@ class _ReservationPageState extends State<ReservationPage> {
 
               child: Text('Submit Reservation'),
             ),
+
           ],
         ),
       ),

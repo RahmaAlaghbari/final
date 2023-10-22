@@ -1,7 +1,9 @@
+
 import 'package:dio/dio.dart';
 
 import '../models/hotel_model.dart';
 import '../models/reservation_model.dart';
+import '../views/my_reservation.dart';
 
 
 class ReservationRepository{
@@ -68,6 +70,9 @@ class ReservationRepository{
 
         if(prod != null){
           return prod.id??0;
+
+
+
         }
         else{
           return 0;
@@ -82,5 +87,28 @@ class ReservationRepository{
   }
 
 
+
+  Future<List<ReservationModel>> getByField(String fieldName, dynamic fieldValue) async {
+    try {
+
+      var response = await dio.get('https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/reservation',
+          queryParameters: {fieldName: fieldValue});
+
+      List<ReservationModel> list = [];
+
+      if (response.statusCode == 200) {
+        var res = response.data;
+        if (res != null) {
+          for (var item in res) {
+            list.add(ReservationModel.fromJson(item));
+          }
+        }
+      }
+
+      return list;
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   }

@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import '../repository/autho.dart';
 import 'package:provider/provider.dart';
 import 'Home.dart';
-
+import 'signup.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
+
 
 class _LoginPageState extends State<LoginPage> {
   TextEditingController _emailController = TextEditingController();
@@ -19,174 +20,205 @@ class _LoginPageState extends State<LoginPage> {
   bool _isSubmitPressed = false;
 
 
-
   @override
   Widget build(BuildContext context) {
 
     AuthenticationProviderr authProvider =
     Provider.of<AuthenticationProviderr>(context, listen: false);
-
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('assets/login.png'), fit: BoxFit.cover),
       ),
-      body: ListView(
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(30.0),
-            child: Center(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Stack(
+          children: [
+            Container(),
+            Container(
+              padding: EdgeInsets.only(left: 35, top: 130),
               child: Text(
-                'Log in',
-                style: TextStyle(
-                  fontSize: 35,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 4,
+                'Welcome\nBack',
+                style: TextStyle(color: Colors.white, fontSize: 33),
+              ),
+            ),
+            SingleChildScrollView(
+              child: Container(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.5),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 35, right: 35),
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              keyboardType: TextInputType.emailAddress,
+                              autovalidateMode: _isSubmitPressed
+                                  ? AutovalidateMode.disabled
+                                  : AutovalidateMode.onUserInteraction,
+                              controller: _emailController,
+                              validator: (value) {
+                                RegExp emailRegex =
+                                RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+                                if (value == null) {
+                                  return 'Email is required';
+                                } else if (value.length < 10) {
+                                  return 'Email must be more than 10 characters';
+                                } else if (!value.contains('@')) {
+                                  return 'Email must contain @';
+                                } else if (!emailRegex.hasMatch(value)) {
+                                  return 'Invalid email';
+                                }
+
+                                return null;
+                              },
+
+                              style: TextStyle(color: Colors.black),
+                              decoration: InputDecoration(
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  hintText: "Email",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            TextFormField(
+
+                              style: TextStyle(),
+                              obscureText: true,
+                              controller: _passwordController,
+                              autovalidateMode: _isSubmitPressed
+                                  ? AutovalidateMode.disabled
+                                  : AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Password is required';
+                                } else if (value.length < 3) {
+                                  return 'Password must be more than 3 characters';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                focusColor: Color(0xFFA76F6F),
+                                fillColor: Colors.grey.shade100,
+                                filled: true,
+                                hintText: "Password",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide(color: Color(0xFFA76F6F), width: 1),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Sign in',
+                                  style: TextStyle(
+                                      fontSize: 27, fontWeight: FontWeight.w700),
+                                ),
+                                CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Color(0xFFA76F6F),
+                                  child: _isLoading ? Visibility(
+                                    visible: _isLoading,
+                                    child: CircularProgressIndicator(),
+
+                                  ) :  IconButton(
+                                      color: Colors.white,
+                                      onPressed: () async {
+                                        if (formKey.currentState!.validate()) {
+                                          setState(() {
+                                            _isLoading = true;
+                                            _isSubmitPressed = true;
+                                          });
+
+                                          print("########################");
+
+                                          // // Call the login method from the AuthenticationProvider
+                                          bool loginSuccess = await authProvider.login(
+                                            _emailController.text,
+                                            _passwordController.text,
+                                          );
+                                          print("########################$loginSuccess");
+
+                                          if (loginSuccess) {
+                                            // Login successful
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => FooterBar()),
+                                            );
+                                          } else {
+                                            // Login failed
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              SnackBar(content: Text('Login failed')),
+                                            );
+                                          }
+                                        }
+                                      },
+                                      icon: Icon(
+                                        Icons.arrow_forward,
+                                      )),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, 'register');
+                                  },
+                                  child: Text(
+                                    'Sign Up',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        color: Color(0xff4c505b),
+                                        fontSize: 18),
+                                  ),
+                                  style: ButtonStyle(),
+                                ),
+                                TextButton(
+                                    onPressed: () {   Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => SignUpPage()),
+                                    );
+                                    },
+                                    child: Text(
+                                      'Forgot Password',
+                                      style: TextStyle(
+                                        decoration: TextDecoration.underline,
+                                        color: Color(0xff4c505b),
+                                        fontSize: 18,
+                                      ),
+                                    )),
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Form(
-            key: formKey,
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    autovalidateMode: _isSubmitPressed
-                        ? AutovalidateMode.disabled
-                        : AutovalidateMode.onUserInteraction,
-                    controller: _emailController,
-                    validator: (value) {
-                      RegExp emailRegex =
-                      RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
-                      if (value == null) {
-                        return 'Email is required';
-                      } else if (value.length < 10) {
-                        return 'Email must be more than 10 characters';
-                      } else if (!value.contains('@')) {
-                        return 'Email must contain @';
-                      } else if (!emailRegex.hasMatch(value)) {
-                        return 'Invalid email';
-                      }
-
-                      return null;
-                    },
-                    maxLength: 30,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColorLight,
-                        ),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(
-                          color: Colors.redAccent,
-                        ),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: TextFormField(
-                    obscureText: true,
-                    controller: _passwordController,
-                    autovalidateMode: _isSubmitPressed
-                        ? AutovalidateMode.disabled
-                        : AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Password is required';
-                      } else if (value.length < 3) {
-                        return 'Password must be more than 3 characters';
-                      } else {
-                        return null;
-                      }
-                    },
-                    maxLength: 20,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).primaryColorLight,
-                        ),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: _isLoading
-                      ? Visibility(
-                    visible: _isLoading,
-                    child: CircularProgressIndicator(),
-                  )
-                      : TextButton(
-                    style: TextButton.styleFrom(
-                      foregroundColor: Theme.of(context).primaryColorDark,
-                      backgroundColor: Theme.of(context).primaryColor,
-                      minimumSize: Size(
-                        MediaQuery.of(context).size.width,
-                        50,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    onPressed: () async {
-                      if (formKey.currentState!.validate()) {
-                        setState(() {
-                          _isLoading = true;
-                          _isSubmitPressed = true;
-                        });
-
-                        print("########################");
-
-                        // // Call the login method from the AuthenticationProvider
-                        bool loginSuccess = await authProvider.login(
-                          _emailController.text,
-                          _passwordController.text,
-                        );
-                        print("########################$loginSuccess");
-
-                        if (loginSuccess) {
-                          // Login successful
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => FooterBar()),
-                          );
-                        } else {
-                          // Login failed
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Login failed')),
-                          );
-                        }
-                      }
-                    },
-                        child: Text(
-                      'Sign In',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
