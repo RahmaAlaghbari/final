@@ -20,7 +20,6 @@ class _HotelUpdateState extends State<HotelUpdate> {
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
   TextEditingController _priceController = TextEditingController();
-  TextEditingController _roomsController = TextEditingController();
 
   bool isError = false;
   String errorMsg = "";
@@ -44,7 +43,6 @@ class _HotelUpdateState extends State<HotelUpdate> {
           _descriptionController.text = hotel.description ?? "";
           _locationController.text = hotel.location ?? "";
           _priceController.text = hotel.price ?? "";
-          _roomsController.text = hotel.rooms! as String;
 
         });
       }
@@ -66,7 +64,6 @@ class _HotelUpdateState extends State<HotelUpdate> {
           description: _descriptionController.text,
           location: _locationController.text,
           price: _priceController.text,
-          rooms: int.tryParse(_roomsController.text) ?? 0,
 
 
         );
@@ -102,7 +99,6 @@ class _HotelUpdateState extends State<HotelUpdate> {
     _descriptionController.dispose();
     _locationController.dispose();
     _priceController.dispose();
-    _roomsController.dispose();
 
 
     super.dispose();
@@ -178,21 +174,6 @@ class _HotelUpdateState extends State<HotelUpdate> {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please enter a price';
-                      }
-                      return null;
-                    },
-                  ),
-
-                  TextFormField(
-                    controller: _roomsController,
-                    decoration: InputDecoration(labelText: 'rooms'),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter a price';
-                      }
-                      if (double.tryParse(value) == null) {
-                        return 'Invalid price. Please enter a valid number.';
                       }
                       return null;
                     },

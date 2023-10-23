@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:project4/CustomPages/appbar.dart';
 import 'package:project4/views/profile/personal_info%20page.dart';
 
+import '../../repository/authontication.dart';
 import '../reservation/my_reservation.dart';
+import 'edit_profil.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -19,14 +21,14 @@ class ProfilePage extends StatelessWidget {
             ),
             SizedBox(height: 16.0),
             Text(
-              'Rahma',
+              '${AuthenticationProvider.fName}',
               style: TextStyle(
                 fontSize: 25.0,
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              '@Ra7ma',
+              '${AuthenticationProvider.uName}',
               style: TextStyle(
                 fontSize: 16.0,
                 color: Colors.grey,
@@ -35,6 +37,9 @@ class ProfilePage extends StatelessWidget {
             SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Edit_Profil(userId: '${AuthenticationProvider.iduser}',)),);
                 // Navigate to edit profile screen
               },
               child: Text(
@@ -126,7 +131,7 @@ class ProfilePage extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => myres()),
+                  MaterialPageRoute(builder: (context) => MyReservations()),
                 );              },
             ),
 

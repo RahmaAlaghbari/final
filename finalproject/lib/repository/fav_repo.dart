@@ -1,30 +1,27 @@
 
 import 'package:dio/dio.dart';
-
-import '../models/hotel_model.dart';
-import '../models/reservation_model.dart';
-import '../views/reservation/my_reservation.dart';
+import '../models/fav_model.dart';
 
 
-class ReservationRepository{
+class FavRepository{
   late Dio dio ;
-  ReservationRepository(){
+  FavRepository(){
     dio = Dio();
     dio.options.connectTimeout = Duration(seconds: 10);
     dio.options.responseType = ResponseType.json;
   }
 
-  Future<List<ReservationModel>> getAll()async{
+  Future<List<FavModel>> getAll()async{
 
     try{
       // await Future.delayed(Duration(milliseconds: 300));
       var res = await dio.get('https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/reservation');
-      List<ReservationModel> items = [];
+      List<FavModel> items = [];
       if(res.statusCode == 200){
         var data = res.data as List;
         if(data.isNotEmpty){
           for (var e in data) {
-            items.add(ReservationModel.fromJson(e));
+            items.add(FavModel.fromJson(e));
           }
           return items;
         }
@@ -38,7 +35,7 @@ class ReservationRepository{
   }
 
 
-  Future<ReservationModel?> getById(String id) async {
+  Future<FavModel?> getById(String id) async {
     try {
       var apiUrl = 'https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/reservation/$id';
       var response = await dio.get(apiUrl); // Make the API request using Dio
@@ -46,7 +43,7 @@ class ReservationRepository{
       if (response.statusCode == 200) {
         var res = response.data;
 
-        return  ReservationModel.fromJson(res);
+        return  FavModel.fromJson(res);
       }
 
       return null;
@@ -56,7 +53,7 @@ class ReservationRepository{
     }
   }
 
-  Future<Object> addd(ReservationModel obj)async{
+  Future<Object> addd(FavModel obj)async{
     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@${obj}");
     try{
 
@@ -66,7 +63,7 @@ class ReservationRepository{
       if (addRes.statusCode == 200) {
 
         var data = addRes.data;
-        var prod = ReservationModel.fromJson(data);
+        var prod = FavModel.fromJson(data);
 
         if(prod != null){
           return prod.id??0;
@@ -85,27 +82,51 @@ class ReservationRepository{
       rethrow;
     }
   }
-  Future<List<ReservationModel>> getByField(String fieldName, String fieldValue) async {
+  Future<List<FavModel>> getByField(String fieldName, String fieldValue) async {
     try {
       var apiUrl = 'https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/reservation';
       var response = await dio.get(apiUrl); // Make the API request using Dio
 
       if (response.statusCode == 200) {
         var res = response.data;
-        List<ReservationModel> reservations = [];
+        List<FavModel> fav = [];
 
         for (var item in res) {
           if (item[fieldName] == fieldValue) {
-            reservations.add(ReservationModel.fromJson(item));
+            fav.add(FavModel.fromJson(item));
           }
         }
 
-        return reservations;
+        return fav;
       }
 
       return [];
     }  catch (e) {
       print('Error: $e');
+      rethrow;
+    }
+  }
+  Future<Object> deletee(String userId) async {
+    try {
+      await Future.delayed(Duration(milliseconds: 300));
+      var deleteRes = await dio.delete(
+        'https://65253db067cfb1e59ce6f039.mockapi.io/hotelusers/users/$userId',
+      );
+      print("###########################################delete res: $deleteRes");
+      if (deleteRes.statusCode == 200) {
+        var data = deleteRes.data;
+        var prod = FavModel.fromJson(data);
+        if (prod != null) {
+          return prod.id ?? 0;
+        } else {
+          // Handle error response or unexpected data
+          throw Exception('Unexpected response data');
+        }
+      } else {
+        // Handle error response
+        throw Exception('Failed to delete favorite');
+      }
+    } catch (ex) {
       rethrow;
     }
   }

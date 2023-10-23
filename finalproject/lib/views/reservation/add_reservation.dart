@@ -248,7 +248,7 @@ class _ReservationPageState extends State<ReservationPage> {
             });
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => myres()),
+              MaterialPageRoute(builder: (context) => MyReservations()),
             );
           }
           else{
@@ -259,7 +259,7 @@ class _ReservationPageState extends State<ReservationPage> {
               error="Operation failed!!";
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => myres()),
+                MaterialPageRoute(builder: (context) => MyReservations()),
               );
             });
           }

@@ -6,13 +6,15 @@ import '../../models/reservation_model.dart';
 import '../../repository/authontication.dart';
 import '../../repository/hotel_repo.dart';
 import '../../repository/reservation_repo.dart';
+import '../models/fav_model.dart';
+import '../repository/fav_repo.dart';
 
-class MyReservations extends StatefulWidget {
+class Myfav extends StatefulWidget {
   @override
-  State<MyReservations> createState() => _MyReservationsState();
+  State<Myfav> createState() => _MyfavState();
 }
 
-class _MyReservationsState extends State<MyReservations> {
+class _MyfavState extends State<Myfav> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -34,11 +36,11 @@ class HotelCard extends StatefulWidget {
   @override
   State<HotelCard> createState() => _HotelCardState();
 }class _HotelCardState extends State<HotelCard> {
-  Future<List<ReservationModel>?> _fetchReservations(String userid) async {
+  Future<List<FavModel>?> _fetchMyfav(String userid) async {
     try {
-      List<ReservationModel> reservations = await ReservationRepository().getByField('userid', AuthenticationProvider.iduser!);
-      if (reservations.isNotEmpty) {
-        return reservations;
+      List<FavModel> fav = await FavRepository().getByField('userid', AuthenticationProvider.iduser!);
+      if (fav.isNotEmpty) {
+        return fav;
       }
       return null;
     } catch (e) {
@@ -60,8 +62,8 @@ class HotelCard extends StatefulWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder<List<ReservationModel>?>(
-        future: _fetchReservations(AuthenticationProvider.iduser!),
+      child: FutureBuilder<List<FavModel>?>(
+        future: _fetchMyfav(AuthenticationProvider.iduser!),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
@@ -69,14 +71,14 @@ class HotelCard extends StatefulWidget {
             if (snapshot.hasError) {
               return Center(child: Text("Error ${snapshot.error.toString()}"));
             } else if (snapshot.hasData && snapshot.data != null) {
-              List<ReservationModel> reservations = snapshot.data!;
+              List<FavModel> fav = snapshot.data!;
               return ListView.separated(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  ReservationModel reservation = reservations[index];
+                  FavModel fave = fav[index];
                   return FutureBuilder<HotelModel?>(
-                    future: _fetchHotel(reservation.hotelid!),
+                    future: _fetchHotel(fave.hotelid!),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
@@ -101,6 +103,21 @@ class HotelCard extends StatefulWidget {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(12.0),
+                                        child: hotel.avatar == ''
+                                            ? Container(
+                                          child: Icon(Icons.image),
+                                          width: 50,
+                                          height: 50,
+                                        )
+                                            : Image.network(
+                                          hotel.avatar!,
+                                          width: double.infinity,
+                                          height: 150.0,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
                                       SizedBox(height: 8.0),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -122,9 +139,10 @@ class HotelCard extends StatefulWidget {
                                           ),
                                         ],
                                       ),
+
                                       SizedBox(height: 8.0),
                                       Text(
-                                        '${reservation.fromdate} -> ${reservation.todate}',
+                                        '${hotel.descnmae}',
                                         style: TextStyle(
                                           fontSize: 16.0,
                                           color: Colors.grey[600],
@@ -148,6 +166,7 @@ class HotelCard extends StatefulWidget {
                                     ],
                                   ),
                                 ),
+
                               ),
                             ),
                           );
@@ -161,7 +180,7 @@ class HotelCard extends StatefulWidget {
                 separatorBuilder: (context, index) {
                   return SizedBox(height: 16.0);
                 },
-                itemCount: reservations.length,
+                itemCount: fav.length,
               );
             } else {
               return Center(child: Text("No data available"));

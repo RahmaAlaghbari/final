@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../repository/authontication.dart';
+
 void main() {
   runApp(PersonalInfoPage());
 }
@@ -38,7 +40,7 @@ class PersonalInfoPage extends StatelessWidget {
               ),
               SizedBox(height: 20.0),
               Text(
-                'Rahma Alaghbari',
+                '${AuthenticationProvider.fName}',
                 style: TextStyle(
                   fontSize: 18.0,
                 ),
@@ -58,14 +60,14 @@ class PersonalInfoPage extends StatelessWidget {
               ),
               SizedBox(height: 20.0),
               Text(
-                'Email: rahma.doe@example.com',
+                '${AuthenticationProvider.email}',
                 style: TextStyle(
                   fontSize: 18.0,
                 ),
               ),
               SizedBox(height: 20.0),
               Text(
-                'Phone: (123) 456-7890',
+                '${AuthenticationProvider.phone}',
                 style: TextStyle(
                   fontSize: 18.0,
                 ),
@@ -76,7 +78,7 @@ class PersonalInfoPage extends StatelessWidget {
               ),
               SizedBox(height: 40.0), // Increase spacing
               Text(
-                'ID',
+                'Gender',
                 style: TextStyle(
                   fontSize: 25.0, // Increase font size
                   fontWeight: FontWeight.bold,
@@ -85,7 +87,7 @@ class PersonalInfoPage extends StatelessWidget {
               ),
               SizedBox(height: 20.0),
               Text(
-                '12345677890',
+                '${AuthenticationProvider.gender}',
                 style: TextStyle(
                   fontSize: 18.0,
                 ),

@@ -1,9 +1,10 @@
-
 import 'package:flutter/material.dart';
+import 'package:project4/views/favorit.dart';
 import '../views/offer_page.dart';
 import '/CustomPages/appbar.dart';
 import 'hotel/Hotels_page.dart';
 import 'profile/profile_page.dart';
+import 'reservation/my_reservation.dart';
 
 class FooterBar extends StatefulWidget {
   @override
@@ -16,7 +17,8 @@ class _FooterBarState extends State<FooterBar> {
 
   List<Widget> _pages = [
     HotelColumn(),
-    OfferPage(),
+    MyReservations(),
+    Myfav(), // Add the FavoritesPage widget
     ProfilePage(), // ProfilePage added as a page in the PageView
   ];
 
@@ -139,21 +141,18 @@ class _FooterBarState extends State<FooterBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_offer),
-            label: 'Offers',
+            label: 'My Reservation',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite), // Add the Favorites icon
+            label: 'Favorites', // Add the label for Favorites
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
           ),
         ],
-        selectedItemColor: Colors.blueGrey,
-        unselectedItemColor: Colors.grey,
-        showUnselectedLabels: true,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.grey[200],
-        elevation: 5,
-        selectedFontSize: 12,
-        unselectedFontSize: 12,
+        // ... (existing bottom navigation bar properties)
       ),
     );
   }

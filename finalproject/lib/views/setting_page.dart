@@ -70,7 +70,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 _selectItem(3);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => myres()),
+                  MaterialPageRoute(builder: (context) => MyReservations()),
                 );
               },
             ),

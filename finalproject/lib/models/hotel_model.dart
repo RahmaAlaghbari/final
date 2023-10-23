@@ -6,7 +6,6 @@ class HotelModel {
     this.description,
     this.price,
     this.location,
-    this.rooms,
     this.id,});
 
   HotelModel.fromJson(dynamic json) {
@@ -16,7 +15,6 @@ class HotelModel {
     description = json['description'];
     price = json['price'];
     location = json['location'];
-    rooms = json['rooms'];
     id = json['id'];
   }
   String? name;
@@ -25,7 +23,6 @@ class HotelModel {
   String? description;
   String? price;
   String? location;
-  int? rooms;
   String? id;
   HotelModel copyWith({  String? name,
     String? avatar,
@@ -33,7 +30,6 @@ class HotelModel {
     String? description,
     String? price,
     String? location,
-    int? rooms,
     String? id,
   }) => HotelModel(  name: name ?? this.name,
     avatar: avatar ?? this.avatar,
@@ -41,7 +37,6 @@ class HotelModel {
     description: description ?? this.description,
     price: price ?? this.price,
     location: location ?? this.location,
-    rooms: rooms ?? this.rooms,
     id: id ?? this.id,
   );
   Map<String, dynamic> toJson() {
@@ -52,7 +47,6 @@ class HotelModel {
     map['description'] = description;
     map['price'] = price;
     map['location'] = location;
-    map['rooms'] = rooms;
     map['id'] = id;
     return map;
   }

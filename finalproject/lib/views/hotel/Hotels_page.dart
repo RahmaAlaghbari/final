@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:project4/views/hotel/Hotal_detail.dart';
+import 'package:project4/repository/authontication.dart';
 
+import '../../models/fav_model.dart';
 import '../../models/hotel_model.dart';
+import '../../repository/fav_repo.dart';
 import '../../repository/hotel_repo.dart';
 import '../reservation/add_reservation.dart';
 
@@ -35,6 +37,9 @@ class HotelCard extends StatefulWidget {
 }
 
 class _HotelCardState extends State<HotelCard> {
+  FavRepository _favoriteRepository = FavRepository();
+  Set<int> _favoriteItems = Set<int>(); // Keep track of favorite items
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,85 +65,140 @@ class _HotelCardState extends State<HotelCard> {
                       ),
                       child: InkWell(
                         onTap: () {
-
                           HotelRepository().getById(list[index].id.toString());
 
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ReservationPage()),
+                            MaterialPageRoute(
+                              builder: (context) => ReservationPage(),
+                            ),
                           );
-
-
                         },
-                        child: Container(
-                          width: double.infinity,
-                          padding: EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(12.0),
-                                child: list[index].avatar == ''
-                                    ? Container(
-                                  child: Icon(Icons.image),
-                                  width: 50,
-                                  height: 50,
-                                )
-                                    : Image.network(
-                                  list[index].avatar!,
-                                  width: double.infinity,
-                                  height: 150.0,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              SizedBox(height: 8.0),
-                              Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                        child: Stack(
+                          alignment: Alignment.topRight, // Add alignment
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              padding: EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "${list[index].name}",
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    child: list[index].avatar == ''
+                                        ? Container(
+                                      child: Icon(Icons.image),
+                                      width: 50,
+                                      height: 50,
+                                    )
+                                        : Image.network(
+                                      list[index].avatar!,
+                                      width: double.infinity,
+                                      height: 150.0,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
+                                  SizedBox(height: 8.0),
+                                  Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "${list[index].name}",
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${list[index].price}',
+                                        style: TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 8.0),
                                   Text(
-                                    '${list[index].price}',
+                                    '${list[index].description}',
                                     style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
+                                      fontSize: 16.0,
+                                      color: Colors.grey[600],
                                     ),
+                                  ),
+                                  SizedBox(height: 8.0),
+                                  RatingBar.builder(
+                                    // initialRating: list[index].rating,
+                                    minRating: 1,
+                                    direction: Axis.horizontal,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    itemSize: 24,
+                                    itemBuilder: (context, _) => Icon(
+                                      Icons.star,
+                                      color: Colors.amber,
+                                    ),
+                                    onRatingUpdate: (rating) {
+                                      // Handle rating update
+                                    },
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 8.0),
-                              Text(
-                                '${list[index].description}',
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Colors.grey[600],
-                                ),
-                              ),
-                              SizedBox(height: 8.0),
-                              RatingBar.builder(
-                               // initialRating: list[index].rating,
-                                minRating: 1,
-                                direction: Axis.horizontal,
-                                allowHalfRating: true,
-                                itemCount: 5,
-                                itemSize: 24,
-                                itemBuilder: (context, _) => Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                ),
-                                onRatingUpdate: (rating) {
-                                  // Handle rating update
-                                },
-                              ),
-                            ],
-                          ),
+                            ),
+                            FutureBuilder<List<FavModel>>(
+                              future: _favoriteRepository.getAll(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return CircularProgressIndicator();
+                                } else if (snapshot.hasData) {
+                                  List<FavModel>? favoriteList = snapshot.data;
+                                  if (favoriteList != null) {
+                                    _favoriteItems = favoriteList
+                                        .map((fav) => fav.hotelid)
+                                        .toSet().cast<int>();
+                                    // Find the matching fav object for the current hotel
+                                    FavModel? fav;
+                                    for (var favorite in favoriteList) {
+                                      if (favorite.hotelid == list[index].id) {
+                                        fav = favorite;
+                                        break;
+                                      }
+                                    }
+                                    return IconButton(
+                                      onPressed: () {
+                                        if (_favoriteItems.contains(list[index].id)) {
+                                          if (fav != null) {
+                                            _favoriteRepository.deletee(fav.id!);
+                                          }
+                                        } else {
+                                          var data = {
+                                            'userid': AuthenticationProvider.iduser,
+                                            'hotelid': list[index].id,
+                                          };
+                                          _favoriteRepository.addd(FavModel.fromJson(data));
+                                        }
+                                      },
+                                      icon: Icon(
+                                        _favoriteItems.contains(list[index].id)
+                                            ? Icons.favorite
+                                            : Icons.favorite_border,
+                                        color: Colors.red,
+                                      ),
+                                    );
+                                  }
+                                }
+                                return IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.favorite_border,
+                                    color: Colors.red,
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ),
