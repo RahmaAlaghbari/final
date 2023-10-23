@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'comp_view.dart';
 import 'hotel/hotels.dart';
 import 'reservation/reservation_view.dart';
 import 'users/users.dart';
@@ -70,6 +71,22 @@ class DashboardPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => res(),
+                    ),
+                  );
+                },
+              ),
+            ),
+            Expanded(
+              child: DashboardCard(
+                title: 'Complaints',
+                value: '25',
+                color: Colors.green,
+                icon: Icons.calendar_today,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CompColumn(),
                     ),
                   );
                 },

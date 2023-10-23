@@ -6,10 +6,28 @@ import '../../repository/authontication.dart';
 import '../reservation/my_reservation.dart';
 import 'edit_profil.dart';
 
-class ProfilePage extends StatelessWidget {
+
+
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
+  @override
+  State<ProfilePage> createState() => _ProfilePage();
+}
+
+
+class _ProfilePage extends State<ProfilePage> {
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return
+    RefreshIndicator(
+        onRefresh: ()async{
+          setState(() {
+
+          });
+        },
+    child: Scaffold(
       body: Container(
         padding: EdgeInsets.only(top: 60.0, left: 10.0),
         child: Column(
@@ -39,7 +57,7 @@ class ProfilePage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Edit_Profil(userId: '${AuthenticationProvider.iduser}',)),);
+                    MaterialPageRoute(builder: (context) => userUpdate(userId: '${AuthenticationProvider.iduser}',)),);
                 // Navigate to edit profile screen
               },
               child: Text(
@@ -139,6 +157,7 @@ class ProfilePage extends StatelessWidget {
           ],
         ),
       ),
+    )
     );
   }
 

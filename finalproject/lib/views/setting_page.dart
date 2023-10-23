@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../repository/authontication.dart';
 
+import 'add_comp.dart';
 import 'contact_us.dart';
 import 'login/login_page.dart';
 import 'reservation/my_reservation.dart';
@@ -56,6 +57,10 @@ class _SettingsPageState extends State<SettingsPage> {
               title: Text('Complaints'),
               onTap: () {
                 _selectItem(2);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CompAdd()),
+                );
                 // TODO: Navigate to complaints page
               },
             ),

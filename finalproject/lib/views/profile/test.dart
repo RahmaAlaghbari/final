@@ -8,16 +8,16 @@ String? selectedGender;
 final genderList = ['female', 'male','others'];
 
 
-class userUpdate extends StatefulWidget {
+class UserUpdate extends StatefulWidget {
   final String userId;
 
-  userUpdate({required this.userId});
+  UserUpdate({required this.userId});
 
   @override
-  _userUpdate createState() => _userUpdate();
+  _UserUpdate createState() => _UserUpdate();
 }
 
-class _userUpdate extends State<userUpdate> {
+class _UserUpdate extends State<UserUpdate> {
   final _formKey = GlobalKey<FormState>();
   final _UserRepository = UserRepository();
   TextEditingController _perController = TextEditingController();
@@ -69,15 +69,15 @@ class _userUpdate extends State<userUpdate> {
         if (existingUser != null) {
           // Create a new UserModel object with the updated permission
           UserModel updatedUser = UserModel(
-            id: widget.userId,
-            per: existingUser.per,
-            fName: _fNameController.text,
-            img: _imgController.text,
-            uName: _uNameController.text,
-            password: _passwordController.text,
-            phone: int.parse(_phoneController.text),
-            gender: _genderController.text,
-            email: _emailController.text,
+            id: existingUser.id,
+            per: _perController.text,
+            fName: existingUser.fName,
+            img: existingUser.img,
+            uName: existingUser.uName,
+            password: existingUser.password,
+            phone: existingUser.phone,
+            gender: existingUser.gender,
+            email: existingUser.email,
           );
 
           // Update the user with the new permission

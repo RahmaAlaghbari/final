@@ -2,14 +2,27 @@ import 'package:flutter/material.dart';
 
 import '../../repository/authontication.dart';
 
-void main() {
-  runApp(PersonalInfoPage());
+class PersonalInfoPage extends StatefulWidget {
+  const PersonalInfoPage({Key? key}) : super(key: key);
+
+  @override
+  State<PersonalInfoPage> createState() => _PersonalInfoPage();
 }
 
-class PersonalInfoPage extends StatelessWidget {
+
+class _PersonalInfoPage extends State<PersonalInfoPage>  {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return
+
+      RefreshIndicator(
+        onRefresh: ()async{
+      setState(() {
+
+      });
+    },
+
+      child:MaterialApp(
       title: 'Personal Info Page',
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
@@ -120,6 +133,7 @@ class PersonalInfoPage extends StatelessWidget {
           ),
         ),
       ),
-    );
+    )
+      );
   }
 }
