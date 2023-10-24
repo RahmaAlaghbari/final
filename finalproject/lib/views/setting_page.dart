@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../CustomPages/appbar.dart';
 import '../repository/authontication.dart';
 
 import 'add_comp.dart';
@@ -24,10 +25,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
-        title: Text('Settings'),
-      ),
+      appBar:   customAppBar(context,'Settings'),
       body: Container(
         child: ListView(
           children: <Widget>[
@@ -51,7 +49,7 @@ class _SettingsPageState extends State<SettingsPage> {
             Divider(),
             ListTile(
               leading: Icon(
-                Icons.border_color_outlined,
+                Icons.mail,
                 color: _selectedIndex == 2 ? Colors.blueGrey : Colors.grey,
               ),
               title: Text('Complaints'),

@@ -27,7 +27,7 @@ class _UserView extends State<UserView> {
           });
         },
         child: Scaffold(
-          appBar: SearchAppBar(),
+          appBar:   customAppBar(context,'Users'),
           floatingActionButton: FloatingActionButton(child: Icon(Icons.add),
               onPressed: ()async{
                 var isAdd=await  Navigator.push(

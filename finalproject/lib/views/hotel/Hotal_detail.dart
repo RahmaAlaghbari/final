@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../CustomPages/appbar.dart';
 import '../reservation/add_reservation.dart';
 import 'Hotels_page.dart';
 
@@ -10,22 +11,7 @@ class HotelDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blueGrey,
-        title: Row(
-          children: [
-            Icon(Icons.hotel, color: Colors.white),
-            SizedBox(width: 8),
-            Text(
-              'Hotel Details',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
+      appBar:   customAppBar(context,'Hotel Details'),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16.0),
         child: Column(

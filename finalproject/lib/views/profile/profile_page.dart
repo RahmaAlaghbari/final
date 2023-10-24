@@ -28,6 +28,7 @@ class _ProfilePage extends State<ProfilePage> {
           });
         },
     child: Scaffold(
+      appBar:   customAppBar(context,'My Profile'),
       body: Container(
         padding: EdgeInsets.only(top: 60.0, left: 10.0),
         child: Column(

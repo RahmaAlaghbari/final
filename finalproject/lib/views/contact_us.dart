@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../CustomPages/appbar.dart';
+
 class ContactUsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Contact Us'),
-        backgroundColor: Colors.blueGrey,
-      ),
+      appBar:   customAppBar(context,'Contact us'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

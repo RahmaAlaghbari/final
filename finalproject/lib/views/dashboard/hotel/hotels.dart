@@ -28,7 +28,7 @@ class _HotelView extends State<HotelView> {
           });
         },
         child: Scaffold(
-          appBar: SearchAppBar(),
+          appBar:   customAppBar(context,'Hotels'),
           floatingActionButton: FloatingActionButton(child: Icon(Icons.add),
               onPressed: ()async{
                 var isAdd=await  Navigator.push(

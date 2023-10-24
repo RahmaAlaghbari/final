@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../CustomPages/appbar.dart';
 import 'comp_view.dart';
 import 'hotel/hotels.dart';
 import 'reservation/reservation_view.dart';
@@ -10,11 +11,7 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        title: Text('Dashboard'),
-        backgroundColor: Colors.black,
-        elevation: 0,
-      ),
+      appBar:   customAppBar(context,'Hotels'),
       body: Container(
         padding: EdgeInsets.all(16.0),
         child: Column(

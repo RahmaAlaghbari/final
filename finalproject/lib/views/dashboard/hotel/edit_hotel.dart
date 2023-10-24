@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../CustomPages/appbar.dart';
 import '../../../models/hotel_model.dart';
 import '../../../repository/hotel_repo.dart';
 
@@ -107,9 +108,7 @@ class _HotelUpdateState extends State<HotelUpdate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Update Hotel'),
-      ),
+      appBar: customAppBar(context,'Edit Hotel'),
       body: ListView(
         children: [
           Padding(

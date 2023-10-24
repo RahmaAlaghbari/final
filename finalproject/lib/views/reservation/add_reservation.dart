@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../CustomPages/appbar.dart';
 import '../../repository/authontication.dart';
 import '../../models/reservation_model.dart';
 import '../../repository/reservation_repo.dart';
@@ -53,6 +54,7 @@ class _ReservationPageState extends State<ReservationPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      appBar:   customAppBar(context,'Add Reservation'),
       body:
      Form(key: formKey,child:
       SingleChildScrollView(

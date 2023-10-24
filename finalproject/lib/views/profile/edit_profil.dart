@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../models/user_model.dart';
 import '../../../repository/user_repo.dart';
+import '../../CustomPages/appbar.dart';
 
 
 String? selectedGender;
@@ -121,9 +122,7 @@ class _userUpdate extends State<userUpdate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Update User'),
-      ),
+      appBar:   customAppBar(context,'Edit Profile'),
       body: ListView(
         children: [
           Padding(

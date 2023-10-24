@@ -38,7 +38,7 @@ class _CompAdd extends State<CompAdd> {
   var formKey=GlobalKey<FormState>();
   Widget build(BuildContext context) {
     return  Scaffold(
-      appBar:  SearchAppBar(),
+      appBar:   customAppBar(context,'New Complaints'),
       body:
       Form(key: formKey,child:
       SingleChildScrollView(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../CustomPages/appbar.dart';
 import '../../../models/user_model.dart';
 import '../../../repository/user_repo.dart';
 
@@ -120,9 +121,7 @@ class _UserUpdate extends State<UserUpdate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Update User'),
-      ),
+      appBar:   customAppBar(context,'Edit Users'),
       body: ListView(
         children: [
           Padding(

@@ -56,54 +56,14 @@ class _hotelAdd extends State<hotelAdd> {
   var formKey=GlobalKey<FormState>();
   Widget build(BuildContext context) {
     return  Scaffold(
-      appBar:  SearchAppBar(),
+      appBar:  customAppBar(context,'Add New Hotel'),
       body: 
       Form(key: formKey,child:
       SingleChildScrollView(
         child: Column(
           children: [
-            // selectedImagePath == ''
-            //     ? Container(child: Icon(Icons.image),width: 50,height: 50,)
-            //
-            //     : Image.file(File(selectedImagePath), height: 200, width: 200, fit: BoxFit.fill,),
-            // Text(
-            //   'Select Image',
-            //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-            // ),
-            // SizedBox(
-            //   height: 20.0,
-            // ),
-            // ElevatedButton(
-            //     style: ButtonStyle(
-            //         backgroundColor: MaterialStateProperty.all(Colors.green),
-            //         padding:
-            //         MaterialStateProperty.all(const EdgeInsets.all(20)),
-            //         textStyle: MaterialStateProperty.all(
-            //             const TextStyle(fontSize: 14, color: Colors.white))),
-            //     onPressed: () async {
-            //       selectedImagePath = await selectImageFromGallery();
-            //       print('Image_Path:-');
-            //       print(selectedImagePath);
-            //       if (selectedImagePath != '') {
-            //
-            //
-            //         setState(() {
-            //           //selectedImagePath=selectedImagePath
-            //
-            //
-            //         });
-            //       } else {
-            //         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            //           content: Text("No Image Selected !"),
-            //         ));
-            //       }
-            //       setState(() {});
-            //     },
-            //     child: const Text('Select')),
+
             const SizedBox(height: 10),
-
-
-
             SizedBox(height: 100,),
             Padding(
               padding: const EdgeInsets.all(20.0),

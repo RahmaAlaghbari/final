@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:project4/views/login/signup.dart';
 import 'package:provider/provider.dart';
 
+import '../../CustomPages/appbar.dart';
 import '../../repository/authontication.dart';
 import '../../repository/login_repo.dart';
 import '../Home.dart';
 import '../dashboard/dashboard.dart';
+import '../../CustomPages/snackpar.dart';
+import '../hotel/Hotels_page.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -37,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            Container(),
+
             Container(
               padding: EdgeInsets.only(left: 35, top: 130),
               child: Text(
@@ -158,16 +161,19 @@ class _LoginPageState extends State<LoginPage> {
 
                                           if (loginSuccess) {
                                             if(AuthenticationProvider.per=="user") {
+                                              myerrorsnack.showSnackbar(context,'User Login');
                                               // Login successful
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        FooterBar()),
+                                                        HomePage()),
                                               );
                                             }
 
                                             else if(AuthenticationProvider.per=="admin"){
+                                              myerrorsnack.showSnackbar(context,'Admin Login');
+
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -177,9 +183,8 @@ class _LoginPageState extends State<LoginPage> {
                                             }
                                           } else {
                                             // Login failed
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(content: Text('Login failed')),
-                                            );
+                                            myerrorsnack.showErrorSnackbar(context,'User');
+
                                           }
                                         }
                                       },

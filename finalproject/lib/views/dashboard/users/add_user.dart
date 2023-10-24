@@ -58,7 +58,7 @@ class _userAdd extends State<userAdd> {
   var formKey=GlobalKey<FormState>();
   Widget build(BuildContext context) {
     return  Scaffold(
-      appBar:  SearchAppBar(),
+      appBar:   customAppBar(context,'Add Users'),
       body: 
       Form(key: formKey,child:
       SingleChildScrollView(

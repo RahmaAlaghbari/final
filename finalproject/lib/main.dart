@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
     return Provider(
       create: (_) => AuthenticationProviderr(Dio()), // Create an instance of the AuthenticationProvider
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Booking Hotels',
         theme: ThemeData(
 

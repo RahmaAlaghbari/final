@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../CustomPages/appbar.dart';
 import '../../repository/authontication.dart';
 
 class PersonalInfoPage extends StatefulWidget {
@@ -28,16 +29,7 @@ class _PersonalInfoPage extends State<PersonalInfoPage>  {
         primarySwatch: Colors.blueGrey,
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Personal Info',
-            style: TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-        ),
+        appBar:   customAppBar(context,'Personal Info'),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(30.0), // Adjust padding to match the style
           child: Column(
