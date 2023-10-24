@@ -164,7 +164,7 @@ class _hotelAdd extends State<hotelAdd> {
 
                 validator: (val){
                   if(val == ""){
-                    return "value is Null";}
+                    return "value is null";}
                   if(val != null){
                     if(val.length <3){
                       return "email must be more than 3 chars";
