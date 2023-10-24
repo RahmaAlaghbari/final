@@ -7,7 +7,7 @@ class FavRepository{
   late Dio dio ;
   FavRepository(){
     dio = Dio();
-    dio.options.connectTimeout = Duration(seconds: 10);
+    dio.options.connectTimeout = Duration(seconds: 20);
     dio.options.responseType = ResponseType.json;
   }
 
