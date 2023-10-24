@@ -4,8 +4,12 @@ import '../../models/user_model.dart';
 import '../../repository/user_repo.dart';
 
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
+
   @override
-  _SignUpPageState createState() => _SignUpPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
+
+  //_SignUpPageState createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
@@ -19,17 +23,22 @@ class _SignUpPageState extends State<SignUpPage> {
   bool iserror=false;
   bool issuccess=false;
   String error="";
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  //final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _imageController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _genderController = TextEditingController();
+  var nameCtr=TextEditingController();
 
-  @override  @override
+  var phoneCtr=TextEditingController();
+  var emailCtr=TextEditingController();
+  var passwordCtr=TextEditingController();
+  var genderCtr=TextEditingController();
+  var perCtr=TextEditingController();
+  var usernameCtr=TextEditingController();
+
+
+  var formKey=GlobalKey<FormState>();
+
+
+
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -42,10 +51,10 @@ class _SignUpPageState extends State<SignUpPage> {
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
-        body: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Stack(
+        body: Form(
+          key: formKey,child:
+        SingleChildScrollView(
+            child: Column(
               children: [
                 Container(
                   padding: EdgeInsets.only(left: 35, top: 30),
@@ -66,7 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: Column(
                             children: [
                               TextFormField(
-                                controller: _nameController,
+                                controller: nameCtr,
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
 
                                 style: TextStyle(color: Colors.black54),
@@ -113,7 +122,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 height: 30,
                               ),//name
                               TextFormField(
-                                controller: _imageController,
+                                controller: usernameCtr,
                                 style: TextStyle(color: Colors.black54),
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
@@ -128,7 +137,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                       color: Colors.black,
                                     ),
                                   ),
-                                  hintText: "Image",
+                                  hintText: "User Name",
                                   fillColor: Colors.grey.shade100,
                                   filled: true,
                                   border:
@@ -140,18 +149,22 @@ class _SignUpPageState extends State<SignUpPage> {
                                 ),
 
 
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter the image URL';
+                                validator: (val){
+                                  if(val == ""){
+                                    return "value is null";}
+                                  if(val != null){
+                                    if(val.length <3){
+                                      return "User Name must be more than 3 chars";
+                                    }
+
                                   }
-                                  return null;
                                 },
                               ),
                               SizedBox(
                                 height: 30,
                               ),//img
                               TextFormField(
-                                controller: _emailController,
+                                controller: emailCtr,
                                 style: TextStyle(color: Colors.black54),
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
@@ -189,7 +202,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                 height: 30,
                               ),//email
                               TextFormField(
-                                controller: _usernameController,
+                                controller: phoneCtr,
+                                keyboardType: TextInputType.number,
                                 style: TextStyle(color: Colors.black54),
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
@@ -204,7 +218,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                       color: Colors.black,
                                     ),
                                   ),
-                                  hintText: "User Name",
+                                  hintText: "phone",
                                   fillColor: Colors.grey.shade100,
                                   filled: true,
                                   border:
@@ -218,7 +232,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Please enter the User Name';
+                                    return 'Please enter the Phone Number';
                                   }
                                   return null;
                                 },
@@ -228,7 +242,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),//user
 
                               TextFormField(
-                                controller: _passwordController,
+                                controller: passwordCtr,
 
                                 style: TextStyle(color: Colors.black54),
                                 obscureText: true,
@@ -260,14 +274,14 @@ class _SignUpPageState extends State<SignUpPage> {
                               ),
 
                               SizedBox(height: 16.0),
-                              Container(
+                              Container(//////////////////////////////////////////////////////////////////////////////////////////////
 
                                   child: DropdownButtonFormField<String>(
                                     value: selectedGender,
                                     onChanged: (newValue) {
                                       setState(() {
                                         selectedGender = newValue;
-                                        _genderController.text = newValue ?? '';
+                                        genderCtr.text = newValue ?? '';
                                       });
                                     },
                                     decoration: InputDecoration(
@@ -321,7 +335,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                     child: IconButton(
                                         color: Colors.white,
                                         onPressed:  ()async{
-                                          if (_formKey.currentState!.validate()) {
+                                          if(formKey.currentState!.validate()){
                                             try{
                                               setState(() {
                                                 loading=true;
@@ -330,14 +344,14 @@ class _SignUpPageState extends State<SignUpPage> {
 
                                               });
                                               var date={
-                                                "fName":_nameController.text,
+                                                "fName":nameCtr.text,
                                                 "img":"https://th.bing.com/th/id/R.e2981720d54bd5c7869ed4918473dbf5?rik=3km1AVdxxXLKSA&riu=http%3a%2f%2fvbconversions.com%2fwp-content%2fuploads%2f2018%2f04%2fperson-icon-6.png&ehk=N8n%2bOsRYgQcalmQs9Vv9wEsqtw93GDpSp23eQJOwfTM%3d&risl=&pid=ImgRaw&r=0",
-                                                "uName":_usernameController.text,
-                                                "password":_passwordController.text,
-                                                "phone":int.parse(_phoneController.text),
+                                                "uName":nameCtr.text,
+                                                "password":passwordCtr.text,
+                                                "phone":int.parse(phoneCtr.text),
                                                 "per":"user",
-                                                "gender":_genderController.text,
-                                                "email":_emailController.text,
+                                                "gender":genderCtr.text,
+                                                "email":emailCtr.text,
 
 
                                               };
@@ -351,7 +365,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
                                                 });
                                                 Navigator.of(context).pop(true);
-
                                               }
                                               else{
                                                 setState(() {
