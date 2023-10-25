@@ -22,7 +22,8 @@ import '../../../models/hotel_model.dart';
 //     return '';
 //   }
 // }
-
+String? selectedCat;
+final catList = ['Luxury Hotels', 'Business Hotels','Resort Hotels'];
 
 class hotelAdd extends StatefulWidget {
   const hotelAdd({Key? key}) : super(key: key);
@@ -47,7 +48,7 @@ class _hotelAdd extends State<hotelAdd> {
   var descriptionCtr=TextEditingController();
   var priceCtr=TextEditingController();
   var locationCtr=TextEditingController();
-  var roomsCtr=TextEditingController();
+  var catCtr=TextEditingController();
  // var avatarCtr=TextEditingController();
 
 
@@ -179,6 +180,39 @@ class _hotelAdd extends State<hotelAdd> {
 
             Padding(
               padding: const EdgeInsets.all(20.0),
+              child: DropdownButtonFormField<String>(
+                value: selectedCat,
+                onChanged: (newValue) {
+                  setState(() {
+                    selectedCat = newValue; // Update the selected permission value
+                    catCtr.text = newValue ?? ''; // Assign the selected permission to the _perController
+                  });
+                },
+                decoration: InputDecoration(
+                  labelText: 'Category',
+                  labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.amber),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                items: catList.map((Category) {
+                  return DropdownMenuItem<String>(
+                    value: Category,
+                    child: Text(Category),
+                  );
+                }).toList(),
+              ),
+            ),
+
+
+
+            Padding(
+              padding: const EdgeInsets.all(20.0),
               child: TextFormField(
 
                 controller: priceCtr,
@@ -251,44 +285,6 @@ class _hotelAdd extends State<hotelAdd> {
 
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: TextFormField(
-
-                controller: roomsCtr,
-                keyboardType: TextInputType.number,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  hintText: "rooms",
-                  labelText: "rooms",
-                  labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                  counterText: "20",
-                  border:
-                  OutlineInputBorder(borderSide:BorderSide(color: Colors.amber),
-                      borderRadius: BorderRadius.circular(20)),
-                  errorBorder:  OutlineInputBorder(borderSide:BorderSide(color: Colors.red),
-                      borderRadius: BorderRadius.circular(20)),
-
-
-
-                ),
-
-
-                validator: (val){
-                  if(val == ""){
-                    return "value is null";}
-                  if(val != null){
-                    if(val.length <3){
-                      return "rooms must be more than 3 chars";
-                    }
-
-                  }
-                }
-                ,
-
-              ),
-            ),
 
 
 
@@ -311,7 +307,7 @@ class _hotelAdd extends State<hotelAdd> {
                 "description":descriptionCtr.text,
                 "price":priceCtr.text,
                 "location":locationCtr.text,
-                "rooms":int.parse(roomsCtr.text),
+                "cat":catCtr.text,
 
 
 

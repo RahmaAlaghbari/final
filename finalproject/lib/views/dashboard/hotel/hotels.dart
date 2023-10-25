@@ -72,6 +72,7 @@ class _HotelView extends State<HotelView> {
                             subtitle:Row(children: [
 
                               Text("${list[index].descnmae}" ,),
+                              Text("${list[index].cat}" ,),
                               SizedBox(width: 50,),
                               Text("${list[index].description}" ,style: TextStyle(color: Colors.red),),
                             ],),

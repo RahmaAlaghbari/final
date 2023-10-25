@@ -1,7 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../../CustomPages/appbar.dart';
 import '../../../models/hotel_model.dart';
 import '../../../repository/hotel_repo.dart';
+
+
+String? selectedCat;
+final catList = ['Luxury Hotels', 'Business Hotels','Resort Hotels'];
 
 class HotelUpdate extends StatefulWidget {
   final String hotelId;
@@ -20,6 +25,7 @@ class _HotelUpdateState extends State<HotelUpdate> {
   TextEditingController _avatarController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
+  TextEditingController _catController = TextEditingController();
   TextEditingController _priceController = TextEditingController();
 
   bool isError = false;
@@ -43,6 +49,7 @@ class _HotelUpdateState extends State<HotelUpdate> {
           _avatarController.text = hotel.avatar ?? "";
           _descriptionController.text = hotel.description ?? "";
           _locationController.text = hotel.location ?? "";
+          _catController.text = hotel.cat ?? "";
           _priceController.text = hotel.price ?? "";
 
         });
@@ -64,6 +71,7 @@ class _HotelUpdateState extends State<HotelUpdate> {
           avatar: _avatarController.text,
           description: _descriptionController.text,
           location: _locationController.text,
+          cat: _catController.text,
           price: _priceController.text,
 
 
@@ -99,6 +107,7 @@ class _HotelUpdateState extends State<HotelUpdate> {
     _avatarController.dispose();
     _descriptionController.dispose();
     _locationController.dispose();
+    _catController.dispose();
     _priceController.dispose();
 
 
@@ -167,6 +176,44 @@ class _HotelUpdateState extends State<HotelUpdate> {
                       return null;
                     },
                   ),
+
+
+
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: DropdownButtonFormField<String>(
+                      value: selectedCat,
+                      onChanged: (newValue) {
+                        setState(() {
+                          selectedCat = newValue; // Update the selected permission value
+                          _catController.text = newValue ?? ''; // Assign the selected permission to the _perController
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Category',
+                        labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.amber),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      items: catList.map((Category) {
+                        return DropdownMenuItem<String>(
+                          value: Category,
+                          child: Text(Category),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+
+
+
+
+
                   TextFormField(
                     controller: _priceController,
                     decoration: InputDecoration(labelText: 'Price'),
