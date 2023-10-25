@@ -6,6 +6,21 @@ import '../../repository/authontication.dart';
 import '../reservation/my_reservation.dart';
 import 'edit_profil.dart';
 
+import 'package:image_picker/image_picker.dart';
+
+final ImagePicker _picker = ImagePicker();
+
+Future<void> pickImage(ImageSource source) async {
+  final pickedImage = await _picker.getImage(source: source);
+
+  if (pickedImage != null) {
+    // Use the picked image
+    final imagePath = pickedImage.path;
+    // Do something with the image path
+  } else {
+    // User canceled the picker
+  }
+}
 
 
 class ProfilePage extends StatefulWidget {
