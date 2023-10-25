@@ -8,14 +8,17 @@ import '../../CustomPages/snackpar.dart';
 AppBar customAppBar(BuildContext context, String title) {
   if (AuthenticationProvider.per == "user") {
     return AppBar(
-      elevation: 0,
-      backgroundColor: Color(0xFF3A424D),
-      title: Text(
-        '${title}',
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
+
+      elevation: 5,
+      backgroundColor: Colors.brown[300],
+      title: Center(
+        child: Text(
+          '${title}',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
         ),
       ),
       actions: [

@@ -18,15 +18,18 @@ class Myfav extends StatefulWidget {
 class _MyfavState extends State<Myfav> {
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        setState(() {});
-      },
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            HotelCardf(),
-          ],
+    return Scaffold(
+      appBar:customAppBar(context,'My Favorite'),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          setState(() {});
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              HotelCardf(),
+            ],
+          ),
         ),
       ),
     );
@@ -183,10 +186,58 @@ class HotelCardf extends StatefulWidget {
                                 itemCount: fav.length,
                               );
                             } else {
-                              return Center(child: Text("No data available"));
+                              return  Center(
+                                child: Column(
+
+                                  children: [
+                                    SizedBox(height: 300.0),
+                                    Container(
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        // Adjust the color as per your preference
+                                      ),
+
+                                      padding: EdgeInsets.all(20),
+                                      child: Text(
+                                        "No data available",
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black45, // Adjust the color as per your preference
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
                             }
                           } else {
-                            return Center(child: Text("Error loading data"));
+                            return  Center(
+                              child: Column(
+
+                                children: [
+                                  SizedBox(height: 300.0),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      // Adjust the color as per your preference
+                                    ),
+
+                                    padding: EdgeInsets.all(20),
+                                    child: Text(
+                                      "Error loading data",
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black45, // Adjust the color as per your preference
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
                         }
                         },
                         ),

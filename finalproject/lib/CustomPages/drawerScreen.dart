@@ -10,7 +10,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFA76F6F),
+      color: Colors.brown[300],
       padding: EdgeInsets.only(top:50,bottom: 70,left: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

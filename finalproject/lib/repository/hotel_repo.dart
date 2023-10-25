@@ -57,6 +57,34 @@ class HotelRepository{
     }
   }
 
+
+
+
+  Future<List<HotelModel>> getByField(String fieldName, String fieldValue) async {
+    try {
+      var apiUrl = 'https://65253db067cfb1e59ce6f039.mockapi.io/hotelusers/hotels';
+      var response = await dio.get(apiUrl); // Make the API request using Dio
+
+      if (response.statusCode == 200) {
+        var res = response.data;
+        List<HotelModel> hotel = [];
+
+        for (var item in res) {
+          if (item[fieldName] == fieldValue) {
+            hotel.add(HotelModel.fromJson(item));
+          }
+        }
+
+        return hotel;
+      }
+
+      return [];
+    }  catch (e) {
+      print('Error: $e');
+      rethrow;
+    }
+  }
+
   Future<Object> addd(HotelModel obj)async{
     try{
       await Future.delayed(Duration(milliseconds: 300));

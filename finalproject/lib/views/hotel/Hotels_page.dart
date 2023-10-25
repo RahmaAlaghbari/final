@@ -17,6 +17,7 @@ class HotelColumn extends StatefulWidget {
   @override
   State<HotelColumn> createState() => _HotelColumnState();
 }
+String selectedCat ='All Hotels';
 
 class _HotelColumnState extends State<HotelColumn> {
   @override
@@ -59,12 +60,13 @@ class _HotelCardState extends State<HotelCardh> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
+
       transform: Matrix4.translationValues(xOffset, yOffset, 0)
         ..scale(scaleFactor)..rotateY(isDrawerOpen? -0.5:0),
       duration: Duration(milliseconds: 250),
 
       decoration: BoxDecoration(
-          color: Colors.grey[200],
+          color: Colors.grey[300],
 
           borderRadius: BorderRadius.circular(isDrawerOpen?40:0.0)
 
@@ -72,60 +74,83 @@ class _HotelCardState extends State<HotelCardh> {
       child: SingleChildScrollView(
           child: Column(
             children: [
+
             SizedBox(
-            height: 50,
+            height: 0,
           ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                isDrawerOpen?IconButton(
-                  icon: Icon(Icons.arrow_back_ios),
-                  onPressed: (){
-                    setState(() {
-                      xOffset=0;
-                      yOffset=0;
-                      scaleFactor=1;
-                      isDrawerOpen=false;
+              Material(
+                elevation: 5,
+                color: Colors.brown[300],
 
-                    });
-                  },
+            child: Container(
 
-                ): IconButton(
-                    icon: Icon(Icons.menu),
-                    onPressed: () {
-                      setState(() {
-                        xOffset = 230;
-                        yOffset = 150;
-                        scaleFactor = 0.6;
-                        isDrawerOpen=true;
-                      });
-                    }),
-                Column(
-                  children: [
-                    Text('Location'),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          color: primaryGreen,
-                        ),
-                        Text('Ukraine'),
-                      ],
-                    ),
-                  ],
-                ),
-                CircleAvatar()
-              ],
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(vertical: 5),
+
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      isDrawerOpen?IconButton(
+                        icon: Icon(Icons.arrow_back_ios),
+                        onPressed: (){
+                          setState(() {
+                            xOffset=0;
+                            yOffset=0;
+                            scaleFactor=1;
+                            isDrawerOpen=false;
+
+                          });
+                        },
+
+                      ): IconButton(
+                          icon: Icon(Icons.menu ,size: 30,color: Colors.white,),
+                          onPressed: () {
+                            setState(() {
+                              xOffset = 230;
+                              yOffset = 150;
+                              scaleFactor = 0.6;
+                              isDrawerOpen=true;
+                            });
+                          }),
+
+
+                      Column(
+
+                        children: [
+                          SizedBox(
+                            height: 6,
+                          ),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text('Hotels',style:
+                              TextStyle(fontSize: 22,fontWeight:FontWeight.bold,color: Colors.white),),
+                            ],
+                          ),
+                        ],
+                      ),
+                      CircleAvatar()
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
 
           Container(
+
             padding: EdgeInsets.symmetric(horizontal: 20,vertical: 15),
             margin: EdgeInsets.symmetric(vertical: 30,horizontal: 20),
             decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.brown[100],
                 borderRadius: BorderRadius.circular(20)
             ),
             child: Row(
@@ -197,21 +222,33 @@ class _HotelCardState extends State<HotelCardh> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
-                    onTap: () {
+
+                      onTap: () {
+                        setState(() {
+                          selectedCat = 'All Hotels';
+                          print(selectedCat);
+                        });
+                      },
+
+
                       // Handle onTap for Title 1
-                    },
+
                     child: InkWell(
                       borderRadius: BorderRadius.circular(40),
                       onTap: () {
-                        // Handle onTap for Title 1
+                        setState(() {
+                          selectedCat = 'All Hotels';
+                          print(selectedCat);
+                        });
                       },
+
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundColor: Colors.green[300],
-                            child: Icon(Icons.image, size: 30, color: Colors.white),
+                            backgroundColor: Colors.teal[200],
+                            child: Icon(Icons.business, size: 30, color: Colors.white),
                           ),
                           SizedBox(height: 8),
                           Text(
@@ -219,7 +256,7 @@ class _HotelCardState extends State<HotelCardh> {
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: Colors.green,
+                              color: Colors.black45,
                             ),
                           ),
                         ],
@@ -228,220 +265,40 @@ class _HotelCardState extends State<HotelCardh> {
                   ),
                   SizedBox(width: 7.0),
                   GestureDetector(
-                    onTap: () {
 
+                   onTap: () {
+                      setState(() {
+                      selectedCat = 'Luxury Hotels';
+                      print(selectedCat);
 
+                      });
+                      },
 
-
-                      Container(
-
-                        child: FutureBuilder<List<HotelModel>>(
-
-
-                          future: HotelRepository().getAll(),
-
-
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState == ConnectionState.waiting) {
-                              return Center(child: CircularProgressIndicator());
-                            } else if (snapshot.connectionState == ConnectionState.done) {
-                              if (snapshot.hasError)
-                                return Center(child: Text("Error ${snapshot.error.toString()}"));
-                              else if (snapshot.hasData) {
-                                var list = snapshot.data ?? [];
-
-                                return ListView.separated(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-
-                                    return Container(
-                                      child: Card(
-                                        elevation: 4.0,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(12.0),
-                                        ),
-                                        child: InkWell(
-                                          onTap: () {
-                                            HotelRepository().getById(list[index].id.toString());
-
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => ReservationPage(),
-                                              ),
-                                            );
-                                          },
-                                          child: Stack(
-                                            alignment: Alignment.topRight, // Add alignment
-                                            children: [
-                                              Container(
-                                                width: double.infinity,
-                                                padding: EdgeInsets.all(16.0),
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    ClipRRect(
-                                                      borderRadius: BorderRadius.circular(12.0),
-                                                      child: list[index].avatar == ''
-                                                          ? Container(
-                                                        child: Icon(Icons.image),
-                                                        width: 50,
-                                                        height: 50,
-                                                      )
-                                                          : Image.network(
-                                                        list[index].avatar!,
-                                                        width: double.infinity,
-                                                        height: 150.0,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 8.0),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                      MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          "${list[index].name}",
-                                                          style: TextStyle(
-                                                            fontSize: 20.0,
-                                                            fontWeight: FontWeight.bold,
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          '${list[index].price}',
-                                                          style: TextStyle(
-                                                            fontSize: 18.0,
-                                                            fontWeight: FontWeight.bold,
-                                                            color: Colors.black,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    SizedBox(height: 8.0),
-                                                    Text(
-                                                      '${list[index].description}',
-                                                      style: TextStyle(
-                                                        fontSize: 16.0,
-                                                        color: Colors.grey[600],
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 8.0),
-                                                    RatingBar.builder(
-                                                      // initialRating: list[index].rating,
-                                                      minRating: 1,
-                                                      direction: Axis.horizontal,
-                                                      allowHalfRating: true,
-                                                      itemCount: 5,
-                                                      itemSize: 24,
-                                                      itemBuilder: (context, _) => Icon(
-                                                        Icons.star,
-                                                        color: Colors.amber,
-                                                      ),
-                                                      onRatingUpdate: (rating) {
-                                                        // Handle rating update
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              FutureBuilder<List<FavModel>>(
-                                                future: _favoriteRepository.getAll(),
-                                                builder: (context, snapshot) {
-                                                  if (snapshot.connectionState == ConnectionState.waiting) {
-                                                    return CircularProgressIndicator();
-                                                  } else if (snapshot.hasData) {
-                                                    List<FavModel>? favoriteList = snapshot.data;
-                                                    if (favoriteList != null) {
-                                                      _favoriteItems = favoriteList
-                                                          .map((fav) => fav.hotelid)
-                                                          .toSet().cast<int>();
-                                                      // Find the matching fav object for the current hotel
-                                                      FavModel? fav;
-                                                      for (var favorite in favoriteList) {
-                                                        if (favorite.hotelid == list[index].id) {
-                                                          fav = favorite;
-                                                          break;
-                                                        }
-                                                      }
-                                                      return IconButton(
-                                                        onPressed: () {
-                                                          if (_favoriteItems.contains(list[index].id)) {
-                                                            if (fav != null) {
-                                                              _favoriteRepository.deletee(fav.id!);
-                                                            }
-                                                          } else {
-                                                            var data = {
-                                                              'userid': AuthenticationProvider.iduser,
-                                                              'hotelid': list[index].id,
-                                                            };
-                                                            _favoriteRepository.addd(FavModel.fromJson(data));
-                                                          }
-                                                        },
-                                                        icon: Icon(
-                                                          _favoriteItems.contains(list[index].id)
-                                                              ? Icons.favorite
-                                                              : Icons.favorite_border,
-                                                          color: Colors.red,
-                                                        ),
-                                                      );
-                                                    }
-                                                  }
-                                                  return IconButton(
-                                                    onPressed: () {},
-                                                    icon: Icon(
-                                                      Icons.favorite_border,
-                                                      color: Colors.red,
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  separatorBuilder: (context, index) {
-                                    return SizedBox(height: 16.0);
-                                  },
-                                  itemCount: list.length,
-                                );
-                              } else {
-                                return Center(child: Text("No data available"));
-                              }
-                            } else {
-                              return Center(child: Text("Error loading data"));
-                            }
-                          },
-                        ),
-                      );
-
-
-
-
-                      // Handle onTap for Title 2
-                    },
                     child: InkWell(
                       borderRadius: BorderRadius.circular(40),
-                      onTap: () {
-                        // Handle onTap for Title 2
-                      },
-                      child: Column(
+                    onTap: () {
+                      setState(() {
+                        selectedCat = 'Luxury Hotels';
+                        print(selectedCat);
+
+                      });
+                    },
+
+        child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundColor: Colors.lightBlue[200],
-                            child: Icon(Icons.image, size: 30, color: Colors.white),
+                            backgroundColor: Colors.black45,
+                            child: Icon(Icons.coffee_maker_rounded, size: 30, color: Colors.white),
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'Title 2',
+                            'Luxury',
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: Colors.green,
+                              color: Colors.black45,
                             ),
                           ),
                         ],
@@ -451,11 +308,23 @@ class _HotelCardState extends State<HotelCardh> {
                   SizedBox(width: 7.0),
                   GestureDetector(
                     onTap: () {
+
+                        setState(() {
+                          selectedCat = 'Business Hotels';
+                        });
+
+
                       // Handle onTap for Title 3
                     },
                     child: InkWell(
                       borderRadius: BorderRadius.circular(40),
                       onTap: () {
+
+                        setState(() {
+                          selectedCat = 'Business Hotels';
+                        });
+
+
                         // Handle onTap for Title 3
                       },
                       child: Column(
@@ -463,16 +332,16 @@ class _HotelCardState extends State<HotelCardh> {
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundColor: Colors.amber[200],
-                            child: Icon(Icons.image, size: 30, color: Colors.white),
+                            backgroundColor: Colors.blueGrey[200],
+                            child: Icon(Icons.business_center_sharp, size: 30, color: Colors.white),
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'Title 3',
+                            'Business',
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: Colors.green,
+                              color: Colors.black45,
                             ),
                           ),
                         ],
@@ -481,12 +350,21 @@ class _HotelCardState extends State<HotelCardh> {
                   ),
                   SizedBox(width: 7.0),
                   GestureDetector(
-                    onTap: () {
+
+                      onTap: () {
+                        setState(() {
+                          selectedCat = 'Resort Hotels';
+                        });
+
                       // Handle onTap for Title 4
                     },
                     child: InkWell(
                       borderRadius: BorderRadius.circular(40),
                       onTap: () {
+                        setState(() {
+                          selectedCat = 'Resort Hotels';
+                        });
+
                         // Handle onTap for Title 4
                       },
                       child: Column(
@@ -494,16 +372,16 @@ class _HotelCardState extends State<HotelCardh> {
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundColor: Colors.pink[100],
-                            child: Icon(Icons.image, size: 30, color: Colors.white),
+                            backgroundColor: Colors.brown[200],
+                            child: Icon(Icons.sailing_outlined, size: 30, color: Colors.white),
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'Title 4',
+                            'Resort',
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: Colors.green,
+                              color: Colors.black45,
                             ),
                           ),
                         ],
@@ -513,9 +391,221 @@ class _HotelCardState extends State<HotelCardh> {
                 ],
               ),
 
+              SizedBox(height: 30.0),
+
+              Container(
+                color: Colors.brown[100],
+                height: 80,// Set your desired background color here
+                child: Expanded(
+                  child: Center(
+                    child: Text(
+                      "${selectedCat}",
+                      style: TextStyle(
+                        color: Colors.black45,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 10.0),
 
 
-                      ]
+          Container(
+
+
+
+
+             child: FutureBuilder<List<HotelModel>>(
+
+
+              // future: HotelRepository().getAll(),
+               future: selectedCat == 'All Hotels'
+                   ? HotelRepository().getAll()
+                   : HotelRepository().getByField('cat', selectedCat),
+
+
+
+               builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError)
+                    return Center(child: Text("Error ${snapshot.error.toString()}"));
+                  else if (snapshot.hasData) {
+                    var list = snapshot.data ?? [];
+
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+
+                        return Container(
+                          child: Card(
+                            elevation: 4.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                HotelRepository().getById(list[index].id.toString());
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ReservationPage(),
+                                  ),
+                                );
+                              },
+                              child: Stack(
+                                alignment: Alignment.topRight, // Add alignment
+                                children: [
+                                  Container(
+                                    width: double.infinity,
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(12.0),
+                                          child: list[index].avatar == ''
+                                              ? Container(
+                                            child: Icon(Icons.image),
+                                            width: 50,
+                                            height: 50,
+                                          )
+                                              : Image.network(
+                                            list[index].avatar!,
+                                            width: double.infinity,
+                                            height: 150.0,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        SizedBox(height: 8.0),
+                                        Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "${list[index].name}",
+                                              style: TextStyle(
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              '${list[index].price}',
+                                              style: TextStyle(
+                                                fontSize: 18.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 8.0),
+                                        Text(
+                                          '${list[index].description}',
+                                          style: TextStyle(
+                                            fontSize: 16.0,
+                                            color: Colors.grey[600],
+                                          ),
+                                        ),
+                                        SizedBox(height: 8.0),
+                                        RatingBar.builder(
+                                          // initialRating: list[index].rating,
+                                          minRating: 1,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemSize: 24,
+                                          itemBuilder: (context, _) => Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (rating) {
+                                            // Handle rating update
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  FutureBuilder<List<FavModel>>(
+                                    future: _favoriteRepository.getAll(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState == ConnectionState.waiting) {
+                                        return CircularProgressIndicator();
+                                      } else if (snapshot.hasData) {
+                                        List<FavModel>? favoriteList = snapshot.data;
+                                        if (favoriteList != null) {
+                                          _favoriteItems = favoriteList
+                                              .map((fav) => fav.hotelid)
+                                              .toSet().cast<int>();
+                                          // Find the matching fav object for the current hotel
+                                          FavModel? fav;
+                                          for (var favorite in favoriteList) {
+                                            if (favorite.hotelid == list[index].id) {
+                                              fav = favorite;
+                                              break;
+                                            }
+                                          }
+                                          return IconButton(
+                                            onPressed: () {
+                                              if (_favoriteItems.contains(list[index].id)) {
+                                                if (fav != null) {
+                                                  _favoriteRepository.deletee(fav.id!);
+                                                }
+                                              } else {
+                                                var data = {
+                                                  'userid': AuthenticationProvider.iduser,
+                                                  'hotelid': list[index].id,
+                                                };
+                                                _favoriteRepository.addd(FavModel.fromJson(data));
+                                              }
+                                            },
+                                            icon: Icon(
+                                              _favoriteItems.contains(list[index].id)
+                                                  ? Icons.favorite
+                                                  : Icons.favorite_border,
+                                              color: Colors.red,
+                                            ),
+                                          );
+                                        }
+                                      }
+                                      return IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(
+                                          Icons.favorite_border,
+                                          color: Colors.red,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return SizedBox(height: 16.0);
+                      },
+                      itemCount: list.length,
+                    );
+                  } else {
+                    return Center(child: Text("No data available"));
+                  }
+                } else {
+                  return Center(child: Text("Error loading data"));
+                }
+              },
+            ),
+          ),
+
+
+
+          ]
                       )
                       )
                       );

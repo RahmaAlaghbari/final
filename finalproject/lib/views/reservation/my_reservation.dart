@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../../CustomPages/appbar.dart';
 import '../../models/hotel_model.dart';
 import '../../models/reservation_model.dart';
 import '../../repository/authontication.dart';
@@ -16,6 +17,7 @@ class _MyReservationsState extends State<MyReservations> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: customAppBar(context,'Add Reservation'),
       body: RefreshIndicator(
         onRefresh: () async {
           setState(() {});
@@ -166,29 +168,59 @@ class HotelCard extends StatefulWidget {
                   },
                   itemCount: reservations.length,
                 );
-              } else {
-                return Center(
-                  child: Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.grey[200], // Adjust the color as per your preference
-                    ),
+              }else {
+                return  Center(
+                  child: Column(
 
-                    padding: EdgeInsets.all(20),
-                    child: Text(
-                      "No data available",
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black, // Adjust the color as per your preference
+                    children: [
+                      SizedBox(height: 300.0),
+                      Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          // Adjust the color as per your preference
+                        ),
+
+                        padding: EdgeInsets.all(20),
+                        child: Text(
+                          "No data available",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black45, // Adjust the color as per your preference
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 );
               }
             } else {
-              return Center(child: Text("Error loading data"));
+              return  Center(
+                child: Column(
+
+                  children: [
+                    SizedBox(height: 300.0),
+                    Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        // Adjust the color as per your preference
+                      ),
+
+                      padding: EdgeInsets.all(20),
+                      child: Text(
+                        "Error loading data",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black45, // Adjust the color as per your preference
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
             }
           },
         ),
