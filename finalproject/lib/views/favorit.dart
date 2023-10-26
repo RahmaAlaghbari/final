@@ -90,88 +90,90 @@ class HotelCardf extends StatefulWidget {
                                           return Center(child: Text("Error ${snapshot.error.toString()}"));
                                         } else {
                                           HotelModel hotel = snapshot.data ?? HotelModel();
-                                          return Container(
-                                            child: Card(
-                                              elevation: 4.0,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(12.0),
-                                              ),
-                                              child: InkWell(
-                                                onTap: () {
-                                                  print("#################################${AuthenticationProvider.idhotel}");
-                                                },
-                                                child: Container(
-                                                  width: double.infinity,
-                                                  padding: EdgeInsets.all(16.0),
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      ClipRRect(
-                                                        borderRadius: BorderRadius.circular(12.0),
-                                                        child: hotel.avatar == ''
-                                                            ? Container(
-                                                          child: Icon(Icons.image),
-                                                          width: 50,
-                                                          height: 50,
-                                                        )
-                                                            : Image.network(
-                                                          hotel.avatar!,
-                                                          width: double.infinity,
-                                                          height: 150.0,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 8.0),
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                                          return GridView.count(
+                                            crossAxisCount: 2, // Number of columns
+                                            mainAxisSpacing: 8.0, // Vertical spacing between items
+                                            crossAxisSpacing: 8.0, // Horizontal spacing between items
+                                            padding: EdgeInsets.all(8.0), // Grid padding
+                                            children: [
+                                              Container(
+                                                child: Card(
+                                                  elevation: 4.0,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(12.0),
+                                                  ),
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      print("#################################${AuthenticationProvider.idhotel}");
+                                                    },
+                                                    child: Container(
+                                                      padding: EdgeInsets.all(16.0),
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
+                                                          ClipRRect(
+                                                            borderRadius: BorderRadius.circular(12.0),
+                                                            child: hotel.avatar == ''
+                                                                ? Container(
+                                                              child: Icon(Icons.image),
+                                                              width: 50,
+                                                              height: 50,
+                                                            )
+                                                                : Image.network(
+                                                              hotel.avatar!,
+                                                              width: double.infinity,
+                                                              height: 100.0,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 8.0),
                                                           Text(
                                                             "${hotel.name}",
                                                             style: TextStyle(
-                                                              fontSize: 20.0,
+                                                              fontSize: 16.0,
                                                               fontWeight: FontWeight.bold,
                                                             ),
                                                           ),
+                                                          SizedBox(height: 8.0),
                                                           Text(
                                                             '${hotel.price}',
                                                             style: TextStyle(
-                                                              fontSize: 18.0,
+                                                              fontSize: 14.0,
                                                               fontWeight: FontWeight.bold,
                                                               color: Colors.black,
                                                             ),
                                                           ),
+                                                          SizedBox(height: 8.0),
+                                                          Text(
+                                                            '${hotel.descnmae}',
+                                                            style: TextStyle(
+                                                              fontSize: 12.0,
+                                                              color: Colors.grey[600],
+                                                            ),
+                                                          ),
+                                                          SizedBox(height: 8.0),
+                                                          RatingBar.builder(
+                                                            minRating: 1,
+                                                            direction: Axis.horizontal,
+                                                            allowHalfRating: true,
+                                                            itemCount: 5,
+                                                            itemSize: 16,
+                                                            itemBuilder: (context, _) => Icon(
+                                                              Icons.star,
+                                                              color: Colors.amber,
+                                                            ),
+                                                            onRatingUpdate: (rating) {
+                                                              // Handle rating update
+                                                            },
+                                                          ),
                                                         ],
                                                       ),
-
-                                                      SizedBox(height: 8.0),
-                                                      Text(
-                                                        '${hotel.descnmae}',
-                                                        style: TextStyle(
-                                                          fontSize: 16.0,
-                                                          color: Colors.grey[600],
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 8.0),
-                                                      RatingBar.builder(
-                                                        minRating: 1,
-                                                        direction: Axis.horizontal,
-                                                        allowHalfRating: true,
-                                                        itemCount: 5,
-                                                        itemSize: 24,
-                                                        itemBuilder: (context, _) => Icon(
-                                                          Icons.star,
-                                                          color: Colors.amber,
-                                                        ),
-                                                        onRatingUpdate: (rating) {
-                                                          // Handle rating update
-                                                        },
-                                                      ),
-                                                    ],
+                                                    ),
                                                   ),
                                                 ),
-
                                               ),
-                                            ),
+                                            ],
                                           );
                                         }
                                       } else {

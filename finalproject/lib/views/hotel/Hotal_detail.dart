@@ -1,167 +1,148 @@
-
-
 import 'package:flutter/material.dart';
-
 import '../../CustomPages/appbar.dart';
+import '../../CustomPages/configuration.dart';
+import '../../repository/authontication.dart';
 import '../reservation/add_reservation.dart';
-import 'Hotels_page.dart';
 
-class HotelDetailsPage extends StatelessWidget {
+class HotelDetailsPage extends StatefulWidget {
+  @override
+  State<HotelDetailsPage> createState() => _HotelDetailsPageState();
+}
+class _HotelDetailsPageState extends State<HotelDetailsPage> {
+  Future<void> refreshPage() async {
+    // Simulate an asynchronous operation to refresh the page
+    await Future.delayed(Duration(seconds: 6));
+
+    setState(() {
+      // Update the necessary data or perform any other actions
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:   customAppBar(context,'Hotel Details'),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12.0),
-              // child: Image.asset(
-              //   hotel.image,
-              //   width: double.infinity,
-              //   height: 200.0,
-              //   fit: BoxFit.cover,
-              // ),
-            ),
-            SizedBox(height: 16.0),
-            // Row(
-            //   children: [
-            //     Icon(Icons.hotel, color: Colors.blueGrey),
-            //     SizedBox(width: 8.0),
-            //     Text(
-            //       hotel.name,
-            //       style: TextStyle(
-            //         fontSize: 24.0,
-            //         fontWeight: FontWeight.bold,
-            //         color: Colors.blueGrey,
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            SizedBox(height: 8.0),
-            // Text(
-            //   hotel.description,
-            //   style: TextStyle(
-            //     fontSize: 16.0,
-            //     color: Colors.grey[600],
-            //   ),
-            // ),
-            SizedBox(height: 8.0),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey[400],
-            ),
-            SizedBox(height: 16.0),
-            Row(
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@#${AuthenticationProvider.pricehotel}");
+    return RefreshIndicator(
+      onRefresh: refreshPage,
+      child: Scaffold(
+        appBar: customAppBar(context, 'Details'),
+        body: Stack(
+
+        children: [
+          Positioned.fill(
+            child: Column(
               children: [
-                Icon(Icons.attach_money, color: Colors.black),
-                SizedBox(width: 8.0),
-                Text(
-                  'Price:',
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.only(top: 160),
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: Hero(
+                        tag: 1,
+                        child: Transform.scale(
+                         scaleX: 3.2,
+                          scaleY: 5,// Increase the scale factor as desired
+                          child: Image.network('${AuthenticationProvider.avatarhotel}'),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+
+
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: 70,
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: shadowList,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Center(
+                child: Text(
+                  '${AuthenticationProvider.namehotel}',
                   style: TextStyle(
-                    fontSize: 18.0,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
-              ],
-            ),
-            // Text(
-            //   '        ${hotel.price}',
-            //   style: TextStyle(
-            //     fontSize: 18.0,
-            //
-            //     color: Colors.black,
-            //   ),
-            // ),
-            SizedBox(height: 8.0),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey[400],
-            ),
-            SizedBox(height: 16.0),
-            Row(
-              children: [
-                Icon(Icons.description, color: Colors.black),
-                SizedBox(width: 8.0),
-                Text(
-                  'Description',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 8.0),
-            Text(
-              'Welcome to our luxurious hotel! Enjoy a comfortable and unforgettable stay in our well-appointed rooms. Experience top-notch amenities and services, including a relaxing spa, state-of-the-art gym, and refreshing pool. Indulge in exquisite dining options at our on-site restaurant. Our friendly staff is dedicated to providing exceptional hospitality and ensuring your every need is met. Discover the perfect blend of elegance and convenience at our hotel.',
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.grey[600],
               ),
             ),
-            SizedBox(height: 8.0),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey[400],
-            ),
-            SizedBox(height: 16.0),
-            Row(
-              children: [
-                Icon(Icons.location_on, color: Colors.black),
-                SizedBox(width: 8.0),
-                Text(
-                  'Location:',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 8.0),
-            Text(
-              'City, Country',
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.grey[600],
-              ),
-            ),
-            SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ReservationPage()),
-                );
-                // Add your booking logic here
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blueGrey,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                minimumSize: Size(400, 40),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(12.0),
-                child: Text(
-                  'Book Now',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              height: 120,
+              child: Row(
+                children: [
+                  Container(
+                    height: 60,
+                    width: 70,
+                    decoration: BoxDecoration(
+                        color: primaryGreen,
 
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Icon(Icons.favorite_border,color: Colors.white,),
                   ),
-                ),
+                  SizedBox(width: 10,),
+                  Expanded(
+                    child: Container(
+                      height: 60,
+                      decoration: BoxDecoration(color: primaryGreen,borderRadius: BorderRadius.circular(20)),
+                      child:
+                      Center(
+                        child: GestureDetector(
+                          onTap: () {
+
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ReservationPage(),
+                              ),
+                            );
+                            // Handle the onTap action here
+                            // For example, navigate to a new page or perform a specific action
+                          },
+                          child: Text(
+                            'Adoption',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+              ,
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(40),topRight: Radius.circular(40), )
               ),
             ),
-          ],
-        ),
+          )
+
+
+
+        ],
       ),
+    ),
     );
   }
 }

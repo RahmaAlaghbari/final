@@ -15,7 +15,7 @@ class FavRepository{
 
     try{
       // await Future.delayed(Duration(milliseconds: 300));
-      var res = await dio.get('https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/reservation');
+      var res = await dio.get('https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/fav');
       List<FavModel> items = [];
       if(res.statusCode == 200){
         var data = res.data as List;
@@ -37,7 +37,7 @@ class FavRepository{
 
   Future<FavModel?> getById(String id) async {
     try {
-      var apiUrl = 'https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/reservation/$id';
+      var apiUrl = 'https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/fav/$id';
       var response = await dio.get(apiUrl); // Make the API request using Dio
 
       if (response.statusCode == 200) {
@@ -58,7 +58,7 @@ class FavRepository{
     try{
 
       await Future.delayed(Duration(milliseconds: 3000));
-      var addRes = await dio.post('https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/reservation', data: obj.toJson());
+      var addRes = await dio.post('https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/fav', data: obj.toJson());
       print("###########################################add res: ${addRes}");
       if (addRes.statusCode == 200) {
 
@@ -84,7 +84,7 @@ class FavRepository{
   }
   Future<List<FavModel>> getByField(String fieldName, String fieldValue) async {
     try {
-      var apiUrl = 'https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/reservation';
+      var apiUrl = 'https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/fav';
       var response = await dio.get(apiUrl); // Make the API request using Dio
 
       if (response.statusCode == 200) {
@@ -110,7 +110,7 @@ class FavRepository{
     try {
       await Future.delayed(Duration(milliseconds: 300));
       var deleteRes = await dio.delete(
-        'https://65253db067cfb1e59ce6f039.mockapi.io/hotelusers/users/$userId',
+        'https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/fav/$userId',
       );
       print("###########################################delete res: $deleteRes");
       if (deleteRes.statusCode == 200) {

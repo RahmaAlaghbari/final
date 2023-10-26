@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:project4/views/hotel/Hotels_page.dart';
 import '../../CustomPages/appbar.dart';
 import '../../repository/authontication.dart';
 import '../../models/reservation_model.dart';
 import '../../repository/reservation_repo.dart';
+import '../Home.dart';
 import '../login/login_page.dart';
 import 'my_reservation.dart';
 
@@ -261,7 +263,7 @@ class _ReservationPageState extends State<ReservationPage> {
               error="Operation failed!!";
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MyReservations()),
+                MaterialPageRoute(builder: (context) => HomePage()),
               );
             });
           }

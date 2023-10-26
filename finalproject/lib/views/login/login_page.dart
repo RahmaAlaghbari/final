@@ -113,13 +113,13 @@ class _LoginPageState extends State<LoginPage> {
                                 }
                               },
                               decoration: InputDecoration(
-                                focusColor: Color(0xFFA76F6F),
+                                focusColor: Colors.brown[200],
                                 fillColor: Colors.grey.shade100,
                                 filled: true,
                                 hintText: "Password",
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: Color(0xFFA76F6F), width: 1),
+                                  borderSide: BorderSide(color: Colors.brown, width: 1),
                                 ),
                               ),
                             ),
@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 CircleAvatar(
                                   radius: 30,
-                                  backgroundColor: Color(0xFFA76F6F),
+                                  backgroundColor: Colors.brown[200],
                                   child: _isLoading ? Visibility(
                                     visible: _isLoading,
                                     child: CircularProgressIndicator(),

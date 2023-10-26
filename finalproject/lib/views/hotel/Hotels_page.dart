@@ -12,6 +12,7 @@ import '../../models/hotel_model.dart';
 import '../../repository/fav_repo.dart';
 import '../../repository/hotel_repo.dart';
 import '../reservation/add_reservation.dart';
+import 'Hotal_detail.dart';
 
 class HotelColumn extends StatefulWidget {
   @override
@@ -449,12 +450,14 @@ class _HotelCardState extends State<HotelCardh> {
                             ),
                             child: InkWell(
                               onTap: () {
+                                setState(() {});
+
                                 HotelRepository().getById(list[index].id.toString());
 
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ReservationPage(),
+                                    builder: (context) => HotelDetailsPage(),
                                   ),
                                 );
                               },
