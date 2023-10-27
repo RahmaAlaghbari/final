@@ -49,7 +49,7 @@ class _CompAdd extends State<CompAdd> {
 
 
 
-            SizedBox(height: 100,),
+            SizedBox(height: 20,),
 
             Padding(
               padding: const EdgeInsets.all(20.0),

@@ -109,4 +109,30 @@ class ReservationRepository{
       rethrow;
     }
   }
+
+
+  Future<Object> deletee(String hotelId) async {
+    try {
+      await Future.delayed(Duration(milliseconds: 300));
+      var deleteRes = await dio.delete(
+        'https://652b9ff8d0d1df5273ee8a8e.mockapi.io/hotels2/reservation/$hotelId',
+      );
+      print("###########################################delete res: $deleteRes");
+      if (deleteRes.statusCode == 200) {
+        var data = deleteRes.data;
+        var prod = ReservationModel.fromJson(data);
+        if (prod != null) {
+          return prod.id ?? 0;
+        } else {
+          // Handle error response or unexpected data
+          throw Exception('Unexpected response data');
+        }
+      } else {
+        // Handle error response
+        throw Exception('Failed to delete Hotel');
+      }
+    } catch (ex) {
+      rethrow;
+    }
+  }
 }

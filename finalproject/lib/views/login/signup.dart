@@ -345,7 +345,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                               });
                                               var date={
                                                 "fName":nameCtr.text,
-                                                "img":"https://th.bing.com/th/id/R.e2981720d54bd5c7869ed4918473dbf5?rik=3km1AVdxxXLKSA&riu=http%3a%2f%2fvbconversions.com%2fwp-content%2fuploads%2f2018%2f04%2fperson-icon-6.png&ehk=N8n%2bOsRYgQcalmQs9Vv9wEsqtw93GDpSp23eQJOwfTM%3d&risl=&pid=ImgRaw&r=0",
+                                                "img":"assets/person.jpg",
                                                 "uName":nameCtr.text,
                                                 "password":passwordCtr.text,
                                                 "phone":int.parse(phoneCtr.text),

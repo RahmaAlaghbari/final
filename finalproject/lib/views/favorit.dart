@@ -9,6 +9,7 @@ import '../../repository/reservation_repo.dart';
 import '../CustomPages/appbar.dart';
 import '../models/fav_model.dart';
 import '../repository/fav_repo.dart';
+import 'hotel/Hotal_detail.dart';
 
 class Myfav extends StatefulWidget {
   @override
@@ -40,6 +41,8 @@ class HotelCardf extends StatefulWidget {
   @override
   State<HotelCardf> createState() => _HotelCardState();
 }class _HotelCardState extends State<HotelCardf> {
+  FavRepository _favoriteRepository = FavRepository();
+  Set<int> _favoriteItems = Set<int>();
   Future<List<FavModel>?> _fetchMyfav(String userid) async {
     try {
       List<FavModel> fav = await FavRepository().getByField('userid', AuthenticationProvider.iduser!);
@@ -90,90 +93,154 @@ class HotelCardf extends StatefulWidget {
                                           return Center(child: Text("Error ${snapshot.error.toString()}"));
                                         } else {
                                           HotelModel hotel = snapshot.data ?? HotelModel();
+                                          return Container(
+                                            child: Card(
+                                              elevation: 4.0,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(12.0),
+                                              ),
+                                              child: InkWell(
+                                                onTap: () {
 
-                                          return GridView.count(
-                                            crossAxisCount: 2, // Number of columns
-                                            mainAxisSpacing: 8.0, // Vertical spacing between items
-                                            crossAxisSpacing: 8.0, // Horizontal spacing between items
-                                            padding: EdgeInsets.all(8.0), // Grid padding
-                                            children: [
-                                              Container(
-                                                child: Card(
-                                                  elevation: 4.0,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(12.0),
-                                                  ),
-                                                  child: InkWell(
-                                                    onTap: () {
-                                                      print("#################################${AuthenticationProvider.idhotel}");
-                                                    },
-                                                    child: Container(
-                                                      padding: EdgeInsets.all(16.0),
-                                                      child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                  HotelRepository().getById(hotel.id.toString());
+
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => HotelDetailsPage(),
+                                                    ),
+                                                  );
+                                                  print("#################################${hotel.id}");
+
+
+                                                },
+                                                child: Container(
+                                                  width: double.infinity,
+                                                  padding: EdgeInsets.all(16.0),
+                                                  child: Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius: BorderRadius.circular(12.0),
+                                                        child: hotel.avatar == ''
+                                                            ? Container(
+                                                          child: Icon(Icons.image),
+                                                          width: 50,
+                                                          height: 50,
+                                                        )
+                                                            : Image.network(
+                                                          hotel.avatar!,
+                                                          width: double.infinity,
+                                                          height: 150.0,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 8.0),
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: [
-                                                          ClipRRect(
-                                                            borderRadius: BorderRadius.circular(12.0),
-                                                            child: hotel.avatar == ''
-                                                                ? Container(
-                                                              child: Icon(Icons.image),
-                                                              width: 50,
-                                                              height: 50,
-                                                            )
-                                                                : Image.network(
-                                                              hotel.avatar!,
-                                                              width: double.infinity,
-                                                              height: 100.0,
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                          SizedBox(height: 8.0),
                                                           Text(
                                                             "${hotel.name}",
                                                             style: TextStyle(
-                                                              fontSize: 16.0,
+                                                              fontSize: 20.0,
                                                               fontWeight: FontWeight.bold,
                                                             ),
                                                           ),
-                                                          SizedBox(height: 8.0),
                                                           Text(
                                                             '${hotel.price}',
                                                             style: TextStyle(
-                                                              fontSize: 14.0,
+                                                              fontSize: 18.0,
                                                               fontWeight: FontWeight.bold,
                                                               color: Colors.black,
                                                             ),
                                                           ),
-                                                          SizedBox(height: 8.0),
-                                                          Text(
-                                                            '${hotel.descnmae}',
-                                                            style: TextStyle(
-                                                              fontSize: 12.0,
-                                                              color: Colors.grey[600],
-                                                            ),
-                                                          ),
-                                                          SizedBox(height: 8.0),
-                                                          RatingBar.builder(
-                                                            minRating: 1,
-                                                            direction: Axis.horizontal,
-                                                            allowHalfRating: true,
-                                                            itemCount: 5,
-                                                            itemSize: 16,
-                                                            itemBuilder: (context, _) => Icon(
-                                                              Icons.star,
-                                                              color: Colors.amber,
-                                                            ),
-                                                            onRatingUpdate: (rating) {
-                                                              // Handle rating update
-                                                            },
-                                                          ),
                                                         ],
                                                       ),
-                                                    ),
+
+                                                      SizedBox(height: 8.0),
+                                                      Text(
+                                                        '${hotel.descnmae}',
+                                                        style: TextStyle(
+                                                          fontSize: 16.0,
+                                                          color: Colors.grey[600],
+                                                        ),
+                                                      ),
+                                                      SizedBox(height: 8.0),
+                                                      RatingBar.builder(
+                                                        minRating: 1,
+                                                        direction: Axis.horizontal,
+                                                        allowHalfRating: true,
+                                                        itemCount: 5,
+                                                        itemSize: 24,
+                                                        itemBuilder: (context, _) => Icon(
+                                                          Icons.star,
+                                                          color: Colors.amber,
+                                                        ),
+                                                        onRatingUpdate: (rating) {
+                                                          // Handle rating update
+                                                        },
+                                                      ),
+
+                                                      FutureBuilder<List<FavModel>>(
+                                                        future: FavRepository().getAll(),
+                                                        builder: (context, snapshot) {
+                                                          if (snapshot.connectionState == ConnectionState.waiting) {
+                                                            return CircularProgressIndicator();
+                                                          } else if (snapshot.hasData) {
+                                                            List<FavModel>? favoriteList = snapshot.data;
+                                                            if (favoriteList != null) {
+                                                              _favoriteItems = favoriteList
+                                                                  .map((fav) => fav.hotelid)
+                                                                  .toSet().cast<int>();
+                                                              // Find the matching fav object for the current hotel
+                                                              FavModel? fav;
+                                                              for (var favorite in favoriteList) {
+                                                                if (favorite.hotelid == fave.id) {
+                                                                  fav = favorite;
+                                                                  break;
+                                                                }
+                                                              }
+                                                              return IconButton(
+                                                                onPressed: () {
+                                                                  setState(() {
+                                                                  if (_favoriteItems.contains(fave.id)) {
+                                                                    if (fav != null) {
+
+                                                                      _favoriteRepository.deletee(fav.id!);
+                                                                             }
+                                                                  } else {
+
+
+
+                                                                      _favoriteRepository.deletee(fave.id!);
+
+                                                                  }
+                                                                              });
+                                                                },
+                                                                icon: Icon(
+                                                                  _favoriteItems.contains(fave.id)
+                                                                      ? Icons.favorite
+                                                                      : Icons.favorite,
+                                                                  color: Colors.black45,
+                                                                ),
+                                                              );
+                                                            }
+                                                          }
+                                                          return IconButton(
+                                                            onPressed: () {},
+                                                            icon: Icon(
+                                                              Icons.favorite,
+                                                              color: Colors.black45,
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),  ],
                                                   ),
                                                 ),
+
                                               ),
-                                            ],
+
+                                            ),
                                           );
                                         }
                                       } else {

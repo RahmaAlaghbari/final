@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project4/repository/authontication.dart';
+import '../views/login/login_page.dart';
+import '../views/setting_page.dart';
 import 'configuration.dart';
 
 class DrawerScreen extends StatefulWidget {
@@ -22,8 +25,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Miroslava Savitskaya',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-                  Text('Active Status',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold))
+                  Text('${AuthenticationProvider.fName}',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+                  Text('@${AuthenticationProvider.uName}',style: TextStyle(color: Colors.brown[100],))
                 ],
               )
             ],
@@ -62,17 +65,44 @@ class _DrawerScreenState extends State<DrawerScreen> {
           ),
           Row(
             children: [
-              Icon(Icons.settings,color: Colors.white,),
-              SizedBox(width: 10,),
-              Text('Settings',style:TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-              SizedBox(width: 10,),
-              Container(width: 2,height: 20,color: Colors.white,),
-              SizedBox(width: 10,),
-              Text('Log out',style:TextStyle(color: Colors.white,fontWeight: FontWeight.bold),)
-
-
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SettingsPage()),);
+                  // Handle onTap for the Settings text
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.settings, color: Colors.white),
+                    SizedBox(width: 10),
+                    Text('Settings', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              ),
+              SizedBox(width: 10),
+              Container(width: 2, height: 20, color: Colors.white),
+              SizedBox(width: 10),
+              GestureDetector(
+                onTap: () {
+                  AuthenticationProvider.logout();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                        (route) => false,
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor:Colors.brown[200],
+                      content: Text('Logged out successfully.'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                  // Handle onTap for the Log out text
+                },
+                child: Text('Log out', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              ),
             ],
-
           )
 
 

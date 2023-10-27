@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../CustomPages/appbar.dart';
 import '../../repository/authontication.dart';
+import 'edit_profil.dart';
 
 class PersonalInfoPage extends StatefulWidget {
   const PersonalInfoPage({Key? key}) : super(key: key);
@@ -12,120 +14,93 @@ class PersonalInfoPage extends StatefulWidget {
 
 
 class _PersonalInfoPage extends State<PersonalInfoPage>  {
+
   @override
   Widget build(BuildContext context) {
-    return
-
-      RefreshIndicator(
-        onRefresh: ()async{
-      setState(() {
-
-      });
-    },
-
-      child:MaterialApp(
-      title: 'Personal Info Page',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-      ),
-      home: Scaffold(
-        appBar:   customAppBar(context,'Personal Info'),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.all(30.0), // Adjust padding to match the style
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Name',
-                style: TextStyle(
-                  fontSize: 25.0, // Increase font size
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromRGBO(52, 36, 25, 1.0),
+                  Color.fromRGBO(219, 177, 149, 0.6901960784313725),
+                ],
+                begin: FractionalOffset.bottomCenter,
+                end: FractionalOffset.topCenter,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                const SizedBox(height: 40),
+                CircleAvatar(
+                  radius: 70,
+                  backgroundImage: AssetImage('${AuthenticationProvider.img}'),
                 ),
-              ),
-              SizedBox(height: 20.0),
-              Text(
-                '${AuthenticationProvider.fName}',
-                style: TextStyle(
-                  fontSize: 18.0,
-                ),
-              ),
-              Divider(
-                color: Colors.blueGrey, // Change divider color
-                thickness: 1.0, // Add thickness to divider
-              ),
-              SizedBox(height: 40.0), // Increase spacing
-              Text(
-                'Contact Information',
-                style: TextStyle(
-                  fontSize: 25.0, // Increase font size
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              SizedBox(height: 20.0),
-              Text(
-                '${AuthenticationProvider.email}',
-                style: TextStyle(
-                  fontSize: 18.0,
-                ),
-              ),
-              SizedBox(height: 20.0),
-              Text(
-                '${AuthenticationProvider.phone}',
-                style: TextStyle(
-                  fontSize: 18.0,
-                ),
-              ),
-              Divider(
-                color: Colors.blueGrey, // Change divider color
-                thickness: 1.0, // Add thickness to divider
-              ),
-              SizedBox(height: 40.0), // Increase spacing
-              Text(
-                'Gender',
-                style: TextStyle(
-                  fontSize: 25.0, // Increase font size
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-              SizedBox(height: 20.0),
-              Text(
-                '${AuthenticationProvider.gender}',
-                style: TextStyle(
-                  fontSize: 18.0,
-                ),
-              ),
-
-
-
-              // Add more work experience entries as needed
-              SizedBox(height: 40.0), // Increase spacing
-              ElevatedButton(
+                const SizedBox(height: 20),
+            itemProfile('Name', '${AuthenticationProvider.fName}', CupertinoIcons.person),
+            const SizedBox(height: 10),
+            itemProfile('User Name', '@${AuthenticationProvider.uName}', CupertinoIcons.person),
+            const SizedBox(height: 10),
+            itemProfile('Phone', '${AuthenticationProvider.phone}', CupertinoIcons.phone),
+            const SizedBox(height: 10),
+            itemProfile('Gender', '${AuthenticationProvider.gender}', CupertinoIcons.person_2),
+            const SizedBox(height: 10),
+            itemProfile('Email', '${AuthenticationProvider.email}', CupertinoIcons.mail),
+            const SizedBox(height: 20,),
+            SizedBox(
+              width: 200,
+              child:ElevatedButton(
                 onPressed: () {
-                  // Add your edit info functionality here
-                  print('Edit Info button pressed');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => userUpdate(userId: '${AuthenticationProvider.iduser}',)),);
+                  // Navigate to edit profile screen
                 },
                 child: Text(
                   'Edit Info',
                   style: TextStyle(
-                    fontSize: 18.0,
+                    fontSize: 16.0,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  primary: Colors.brown[200],
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  minimumSize: Size(400, 40), // Increase button size
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  minimumSize: Size(200, 60),
                 ),
               ),
-            ],
-          ),
+            )
+          ],
         ),
+    )],),
+    );
+  }
+
+  itemProfile(String title, String subtitle, IconData iconData) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+
+
       ),
-    )
-      );
+      child: ListTile(
+        title: Text(title),
+        subtitle: Text(subtitle),
+        leading: Icon(iconData),
+        tileColor: Colors.white,
+      ),
+    );
   }
 }

@@ -7,6 +7,7 @@ import '../../models/reservation_model.dart';
 import '../../repository/authontication.dart';
 import '../../repository/hotel_repo.dart';
 import '../../repository/reservation_repo.dart';
+import 'delete_res.dart';
 
 class MyReservations extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class _MyReservationsState extends State<MyReservations> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context,'Add Reservation'),
+      appBar: customAppBar(context,'My Reservation'),
       body: RefreshIndicator(
         onRefresh: () async {
           setState(() {});
@@ -150,6 +151,38 @@ class HotelCard extends StatefulWidget {
                                             // Handle rating update
                                           },
                                         ),
+
+
+
+                                        Row(mainAxisSize: MainAxisSize.min,
+                                          children: [
+
+
+
+                                            IconButton(
+                                              onPressed: () async {
+                                                print(reservation.id);
+                                                var delRes = await showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return resDelete(itemId: reservation.id!);
+                                                    },
+                                                );
+                                                if (delRes != null && delRes == true) {
+                                                  setState(() {});
+                                                }
+                                              },
+                                              icon: Icon(Icons.delete,),
+                                            ),
+                                          ],
+                                        )
+
+
+
+
+
+
+
                                       ],
                                     ),
                                   ),
@@ -218,6 +251,10 @@ class HotelCard extends StatefulWidget {
                         ),
                       ),
                     ),
+
+
+
+
                   ],
                 ),
               );

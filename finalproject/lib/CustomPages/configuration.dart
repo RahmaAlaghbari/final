@@ -4,6 +4,7 @@ import 'package:project4/views/profile/profile_page.dart';
 
 import '../views/favorit.dart';
 import '../views/hotel/Hotels_page.dart';
+import '../views/profile/ProfileScreen.dart';
 import '../views/reservation/my_reservation.dart';
 
 Color primaryGreen = Color(0xff416d6d);
@@ -36,7 +37,7 @@ List<Map> drawerItems=[
   {
     'icon': Icons.person,
     'title' : 'Profile',
-  'page' : ProfilePage()
+  'page' : ProfileScreen()
 
   },
 ];

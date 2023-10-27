@@ -12,6 +12,7 @@ import '../../models/hotel_model.dart';
 import '../../repository/fav_repo.dart';
 import '../../repository/hotel_repo.dart';
 import '../reservation/add_reservation.dart';
+import '../setting_page.dart';
 import 'Hotal_detail.dart';
 
 class HotelColumn extends StatefulWidget {
@@ -157,10 +158,25 @@ class _HotelCardState extends State<HotelCardh> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.search),
-                Text('Search pet to adopt'),
-                Icon(Icons.settings)
+                GestureDetector(
+                  onTap: () {
+                    // Handle onTap for the search icon
+                  },
+                  child: Icon(Icons.search),
+                ),
+                Expanded(
+                  child: Text('Search for Hotels..'),
+                ),
+                GestureDetector(
+                  onTap: () {
 
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SettingsPage()),);
+                    // Handle onTap for the settings icon
+                  },
+                  child: Icon(Icons.settings),
+                ),
               ],
             ),
           ),
@@ -223,33 +239,31 @@ class _HotelCardState extends State<HotelCardh> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   GestureDetector(
-
-                      onTap: () {
-                        setState(() {
-                          selectedCat = 'All Hotels';
-                          print(selectedCat);
-                        });
-                      },
-
-
-                      // Handle onTap for Title 1
-
+                    onTap: () {
+                      setState(() {
+                        selectedCat = 'All Hotels';
+                      });
+                    },
                     child: InkWell(
                       borderRadius: BorderRadius.circular(40),
                       onTap: () {
                         setState(() {
                           selectedCat = 'All Hotels';
-                          print(selectedCat);
                         });
                       },
-
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundColor: Colors.teal[200],
-                            child: Icon(Icons.business, size: 30, color: Colors.white),
+                            backgroundColor: selectedCat == 'All Hotels'
+                                ? Colors.teal[300]
+                                : Colors.teal[100],
+                            child: Icon(Icons.business,
+                                size: 30,
+                                color: selectedCat == 'All Hotels'
+                                    ? Colors.white
+                                    : Colors.white),
                           ),
                           SizedBox(height: 8),
                           Text(
@@ -257,7 +271,9 @@ class _HotelCardState extends State<HotelCardh> {
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black45,
+                              color: selectedCat == 'All Hotels'
+                                  ? Colors.black
+                                  : Colors.black26,
                             ),
                           ),
                         ],
@@ -266,32 +282,31 @@ class _HotelCardState extends State<HotelCardh> {
                   ),
                   SizedBox(width: 7.0),
                   GestureDetector(
-
-                   onTap: () {
-                      setState(() {
-                      selectedCat = 'Luxury Hotels';
-                      print(selectedCat);
-
-                      });
-                      },
-
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(40),
                     onTap: () {
                       setState(() {
                         selectedCat = 'Luxury Hotels';
-                        print(selectedCat);
-
                       });
                     },
-
-        child: Column(
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(40),
+                      onTap: () {
+                        setState(() {
+                          selectedCat = 'Luxury Hotels';
+                        });
+                      },
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundColor: Colors.black45,
-                            child: Icon(Icons.coffee_maker_rounded, size: 30, color: Colors.white),
+                            backgroundColor: selectedCat == 'Luxury Hotels'
+                                ? Colors.black45
+                                : Colors.black12,
+                            child: Icon(Icons.coffee_maker_rounded,
+                                size: 30,
+                                color: selectedCat == 'Luxury Hotels'
+                                    ? Colors.white
+                                    : Colors.white),
                           ),
                           SizedBox(height: 8),
                           Text(
@@ -299,7 +314,9 @@ class _HotelCardState extends State<HotelCardh> {
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black45,
+                              color: selectedCat == 'Luxury Hotels'
+                                  ? Colors.black
+                                  : Colors.black26,
                             ),
                           ),
                         ],
@@ -309,32 +326,30 @@ class _HotelCardState extends State<HotelCardh> {
                   SizedBox(width: 7.0),
                   GestureDetector(
                     onTap: () {
-
-                        setState(() {
-                          selectedCat = 'Business Hotels';
-                        });
-
-
-                      // Handle onTap for Title 3
+                      setState(() {
+                        selectedCat = 'Business Hotels';
+                      });
                     },
                     child: InkWell(
                       borderRadius: BorderRadius.circular(40),
                       onTap: () {
-
                         setState(() {
                           selectedCat = 'Business Hotels';
                         });
-
-
-                        // Handle onTap for Title 3
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundColor: Colors.blueGrey[200],
-                            child: Icon(Icons.business_center_sharp, size: 30, color: Colors.white),
+                            backgroundColor: selectedCat == 'Business Hotels'
+                                ? Colors.blueGrey[300]
+                                : Colors.blueGrey[100],
+                            child: Icon(Icons.business_center_sharp,
+                                size: 30,
+                                color: selectedCat == 'Business Hotels'
+                                    ? Colors.white
+                                    : Colors.white),
                           ),
                           SizedBox(height: 8),
                           Text(
@@ -342,7 +357,9 @@ class _HotelCardState extends State<HotelCardh> {
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black45,
+                              color: selectedCat == 'Business Hotels'
+                                  ? Colors.black
+                                  : Colors.black26,
                             ),
                           ),
                         ],
@@ -351,13 +368,10 @@ class _HotelCardState extends State<HotelCardh> {
                   ),
                   SizedBox(width: 7.0),
                   GestureDetector(
-
-                      onTap: () {
-                        setState(() {
-                          selectedCat = 'Resort Hotels';
-                        });
-
-                      // Handle onTap for Title 4
+                    onTap: () {
+                      setState(() {
+                        selectedCat = 'Resort Hotels';
+                      });
                     },
                     child: InkWell(
                       borderRadius: BorderRadius.circular(40),
@@ -365,16 +379,20 @@ class _HotelCardState extends State<HotelCardh> {
                         setState(() {
                           selectedCat = 'Resort Hotels';
                         });
-
-                        // Handle onTap for Title 4
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           CircleAvatar(
                             radius: 30,
-                            backgroundColor: Colors.brown[200],
-                            child: Icon(Icons.sailing_outlined, size: 30, color: Colors.white),
+                            backgroundColor: selectedCat == 'Resort Hotels'
+                                ? Colors.brown[200]
+                                : Colors.brown[100],
+                            child: Icon(Icons.sailing_outlined,
+                                size: 30,
+                                color: selectedCat == 'Resort Hotels'
+                                    ? Colors.white
+                                    : Colors.white),
                           ),
                           SizedBox(height: 8),
                           Text(
@@ -382,7 +400,9 @@ class _HotelCardState extends State<HotelCardh> {
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black45,
+                              color: selectedCat == 'Resort Hotels'
+                                  ? Colors.black
+                                  : Colors.black26,
                             ),
                           ),
                         ],
@@ -571,7 +591,7 @@ class _HotelCardState extends State<HotelCardh> {
                                               _favoriteItems.contains(list[index].id)
                                                   ? Icons.favorite
                                                   : Icons.favorite_border,
-                                              color: Colors.red,
+                                              color: Colors.black45,
                                             ),
                                           );
                                         }
@@ -580,7 +600,7 @@ class _HotelCardState extends State<HotelCardh> {
                                         onPressed: () {},
                                         icon: Icon(
                                           Icons.favorite_border,
-                                          color: Colors.red,
+                                          color: Colors.black45,
                                         ),
                                       );
                                     },
